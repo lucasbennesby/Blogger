@@ -15,7 +15,7 @@ namespace Blogger.Models
         public string SubtTitulo { get; set; }
         [Required]
         public string Conteudo { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? Data { get; set; }
         [Required]
         [StringLength(50)]
         public string NomeAutor { get; set; }

@@ -7,7 +7,8 @@ namespace Blogger.Controllers
     {
         public IActionResult Index()
         {
-            return View(List<Publicacao>);
+
+            return View();
         }
     }
 }

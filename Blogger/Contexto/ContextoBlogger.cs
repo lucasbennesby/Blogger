@@ -11,5 +11,10 @@ namespace Blogger.Contexto
         }
 
         public DbSet<Publicacao> Publicacao { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

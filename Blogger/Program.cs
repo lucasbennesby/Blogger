@@ -1,20 +1,17 @@
 using Blogger.Contexto;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
+using Pomelo.EntityFrameworkCore.MySql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
-
-string mySqlConnection = builder.Configuration.GetConnectionString("dbBlogger");
-
 builder.Services.AddDbContext<ContextoBlogger>(options => 
-    options.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection)));
+    options.UseMySql(builder.Configuration.GetConnectionString("dbBlogger"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("dbBlogger"))));
 
-
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
