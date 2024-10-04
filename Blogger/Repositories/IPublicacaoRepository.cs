@@ -6,6 +6,7 @@ namespace Blogger.Repositories
     public interface IPublicacaoRepository
     {
         Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM);
+        Task<List<Publicacao>> Listar();
 
     }
 }

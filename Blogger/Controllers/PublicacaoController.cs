@@ -3,7 +3,6 @@ using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Blogger.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 
 namespace Blogger.Controllers
 {
@@ -16,9 +15,11 @@ namespace Blogger.Controllers
             _publicacaoRepository = publicacao;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var lista = await _publicacaoRepository.Listar();
+
+            return View(lista);
         }
 
         [HttpGet]
@@ -33,6 +34,8 @@ namespace Blogger.Controllers
             await _publicacaoRepository.Criar(publicacaoVM);
             return RedirectToAction("Index");
         }
+       
+
 
 
     }
