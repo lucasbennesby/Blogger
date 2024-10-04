@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Blogger.Models
+namespace Blogger.Models.ViewModels
 {
-    public class Publicacao
+    public class CadastrarPublicacaoViewModel
     {
-        [Key]
-        public int Id { get; set; }
-
+        
         [Required]
         [StringLength(50)]
         public string Titulo { get; set; }
@@ -15,10 +12,8 @@ namespace Blogger.Models
         public string SubtTitulo { get; set; }
         [Required]
         public string Conteudo { get; set; }
-        public DateTime? Data { get; set; }
         [Required]
         [StringLength(50)]
         public string NomeAutor { get; set; }
     }
-    
 }

@@ -1,4 +1,5 @@
 using Blogger.Contexto;
+using Blogger.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql;
 
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContextoBlogger>(options => 
     options.UseMySql(builder.Configuration.GetConnectionString("dbBlogger"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("dbBlogger"))));
+
+builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 
 var app = builder.Build();
 

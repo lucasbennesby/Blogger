@@ -1,7 +1,11 @@
-﻿namespace Blogger.Repositories
+﻿using Blogger.Models;
+using Blogger.Models.ViewModels;
+
+namespace Blogger.Repositories
 {
     public interface IPublicacaoRepository
     {
-        void Criar();
+        Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM);
+
     }
 }

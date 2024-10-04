@@ -1,0 +1,22 @@
+﻿@using Blogger.Models.ViewModels
+@model CadastrarPublicacaoViewModel
+
+<form asp-action="Cadastrar" method="post">
+   <div>
+       <label for="titulo">Título: </label>
+       <input asp-for="Titulo" id="titulo" type="text" required />
+   </div>
+   <div>
+       <label for="subTitulo">SubTitulo: </label>
+        <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
+   </div>
+   <div>
+       <label for="conteudo">Conteúdo: </label>
+        <input asp-for="Conteudo" id="conteudo" type="text" required />
+   </div>
+    <div>
+        <label for="autor">Autor: </label>
+        <input asp-for="NomeAutor" id="autor" type="text" required />
+    </div>
+    <button asp type="submit">Criar</button>
+</form>
