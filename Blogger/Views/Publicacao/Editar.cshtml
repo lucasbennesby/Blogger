@@ -1,0 +1,24 @@
+﻿@model Publicacao
+
+<form asp-action="Editar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Data" />
+    <div>
+        <label for="titulo">Título: </label>
+        <input asp-for="Titulo" id="titulo" type="text" required />
+    </div>
+    <div>
+        <label for="subTitulo">SubTitulo: </label>
+        <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
+    </div>
+    <div>
+        <label for="conteudo">Conteúdo: </label>
+        <input asp-for="Conteudo" id="conteudo" type="text" required />
+    </div>
+    <div>
+        <label for="autor">Autor: </label>
+        <input asp-for="NomeAutor" id="autor" type="text" required />
+    </div>
+    <button asp type="submit">Editar</button>
+    <a asp-action="Index">Cancelar</a> 
+</form>

@@ -8,5 +8,9 @@ namespace Blogger.Repositories
         Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM);
         Task<List<Publicacao>> Listar();
 
+        Task<Publicacao> BuscarPorId(int id);
+
+        Task Editar(Publicacao publicacao);
+
     }
 }

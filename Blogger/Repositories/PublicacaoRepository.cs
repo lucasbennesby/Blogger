@@ -2,6 +2,7 @@
 using Blogger.Contexto;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Repositories
@@ -33,6 +34,20 @@ namespace Blogger.Repositories
             var lista = await _contextoBlogger.Publicacao.ToListAsync();
 
             return lista;
+        }
+
+        public async Task<Publicacao> BuscarPorId(int id)
+        {
+            Publicacao publicacao = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
+
+            return publicacao;
+        }
+
+        public async Task Editar(Publicacao publicacao)
+        {
+            _contextoBlogger.Publicacao.Update(publicacao);
+           await _contextoBlogger.SaveChangesAsync();
+
         }
     }
 }

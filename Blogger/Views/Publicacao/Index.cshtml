@@ -1,1 +1,24 @@
-﻿<a asp-action="Cadastrar">Criar publicação</a>
+﻿@using Blogger.Models
+@model IEnumerable<Publicacao>
+
+<a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
+
+@if (Model.Count() > 0)
+{
+
+    @foreach (var p in Model)
+    {
+        <div class="card p-3">
+            <p class="m-0">Titulo: @p.Titulo</p>
+            <p class="m-0">Subtitulo: @p.SubtTitulo</p>
+            <p class="m-0">Conteudo: @p.Conteudo</p>
+            <hr />
+            <span>@p.Data , @p.NomeAutor</span>
+            <a asp-action="Editar" asp-route-id="@p.Id" >Editar</a>
+        </div>
+    }
+}
+else
+{
+    <h1>Não existem publicações!</h1>
+}
