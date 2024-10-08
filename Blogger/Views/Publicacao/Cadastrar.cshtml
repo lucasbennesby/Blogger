@@ -1,7 +1,16 @@
 ﻿@using Blogger.Models.ViewModels
 @model CadastrarPublicacaoViewModel
 
-<form asp-action="Cadastrar" method="post">
+<form asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="arquivoDeImagem">
+            <img id="imagem" style="width:300px; height:170px;" />
+        </label>
+    </div>
+    <div>
+        <label>Imagem:</label>
+        <input id="arquivoDeImagem" type="file" name="imagemDaPublicacao" />
+    </div>
    <div>
        <label for="titulo">Título: </label>
        <input asp-for="Titulo" id="titulo" type="text" required />
@@ -20,3 +29,25 @@
     </div>
     <button asp type="submit">Criar</button>
 </form>
+
+
+
+<script>
+    const entradaDeArquivo = document.querySelector("#arquivoDeImagem");
+    entradaDeArquivo.addEventListener("change", function (e) {
+
+        const alvoDeEntrada = e.target;
+        const arquivo = alvoDeEntrada.files[0];
+
+        if(arquivo){
+            const leitor = new FileReader();
+
+            leitor.addEventListener("load",function(e){
+                const alvoDoLeitor = e.target;
+                const imagem = document.querySelector("#imagem");
+                imagem.src = alvoDoLeitor.result;
+            })
+            leitor.readAsDataURL(arquivo);
+        }
+    })
+</script>

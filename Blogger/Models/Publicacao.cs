@@ -9,7 +9,6 @@ namespace Blogger.Models
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string Titulo { get; set; }
@@ -23,6 +22,7 @@ namespace Blogger.Models
         public string NomeAutor { get; set; }
         [MaybeNull]
         public DateTime DataAtualizacao {  get; set; }
+        //public string Imagem { get; set; }
     }
     
 }
