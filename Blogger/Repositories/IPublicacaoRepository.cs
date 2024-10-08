@@ -12,5 +12,7 @@ namespace Blogger.Repositories
 
         Task Editar(Publicacao publicacao);
 
+        Task Deletar(int id);
+
     }
 }

@@ -49,5 +49,13 @@ namespace Blogger.Repositories
            await _contextoBlogger.SaveChangesAsync();
 
         }
+
+        public async Task Deletar(int id)
+        {
+            var publicaco = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
+            _contextoBlogger.Publicacao.Remove(publicaco);
+            await _contextoBlogger.SaveChangesAsync();
+
+        }
     }
 }

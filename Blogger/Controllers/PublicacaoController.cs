@@ -51,9 +51,13 @@ namespace Blogger.Controllers
 
             return RedirectToAction("Index");
         }
-       
 
-
-
+        
+        public async Task<IActionResult> Deletar(int id)
+        {
+           await _publicacaoRepository.Deletar(id);
+            return RedirectToAction("Index");
+            
+        }
     }
 }
