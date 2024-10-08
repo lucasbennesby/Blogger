@@ -21,6 +21,7 @@ namespace Blogger.Repositories
             publicacao.SubtTitulo = publicacaoVM.SubtTitulo;
             publicacao.Conteudo = publicacaoVM.Conteudo;
             publicacao.Data = DateTime.Now;
+            publicacao.DataAtualizacao = DateTime.MinValue;        
             publicacao.NomeAutor = publicacaoVM.NomeAutor;
 
             _contextoBlogger.Add(publicacao);
@@ -45,6 +46,8 @@ namespace Blogger.Repositories
 
         public async Task Editar(Publicacao publicacao)
         {
+            publicacao.DataAtualizacao = DateTime.Now;
+
             _contextoBlogger.Publicacao.Update(publicacao);
            await _contextoBlogger.SaveChangesAsync();
 

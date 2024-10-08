@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Blogger.Models
 {
@@ -19,6 +21,8 @@ namespace Blogger.Models
         [Required]
         [StringLength(50)]
         public string NomeAutor { get; set; }
+        [MaybeNull]
+        public DateTime DataAtualizacao {  get; set; }
     }
     
 }
