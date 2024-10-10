@@ -5,7 +5,7 @@ namespace Blogger.Repositories
 {
     public interface IPublicacaoRepository
     {
-        Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM);
+        Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM, IFormFile imagem);
         Task<List<Publicacao>> Listar();
 
         Task<Publicacao> BuscarPorId(int id);

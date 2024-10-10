@@ -22,7 +22,7 @@ namespace Blogger.Models
         public string NomeAutor { get; set; }
         [MaybeNull]
         public DateTime DataAtualizacao {  get; set; }
-        //public string Imagem { get; set; }
+        public string Imagem { get; set; }
     }
     
 }

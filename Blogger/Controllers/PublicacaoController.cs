@@ -30,9 +30,9 @@ namespace Blogger.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(CadastrarPublicacaoViewModel publicacaoVM)
+        public async Task<IActionResult> Cadastrar(CadastrarPublicacaoViewModel publicacaoVM, IFormFile imagem)
         {
-            await _publicacaoRepository.Criar(publicacaoVM);
+            await _publicacaoRepository.Criar(publicacaoVM, imagem);
             return RedirectToAction("Index");
         }
 
