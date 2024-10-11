@@ -2,35 +2,62 @@
 @model IEnumerable<Publicacao>
 
 
+<link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
 
 
-<a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
+<div class="container d-flex row ">
+    <div class="d-block ">
+        <a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
+    </div>
 
-@if (Model.Count() > 0)
-{
-
-    @foreach (var p in Model)
+    @if (Model.Count() > 0)
     {
-        <div class="card p-3">
-            <p class="m-0">Titulo: @p.Titulo</p>
-            <p class="m-0">Subtitulo: @p.SubtTitulo</p>
-            <p class="m-0">Conteudo: @p.Conteudo</p>
-            <hr />
-            <span>
-                @p.Data,
-                @if (p.DataAtualizacao != DateTime.MinValue)
-                {
-                    @p.DataAtualizacao
-                }
-                ,
-                @p.NomeAutor
-            </span>
-            <a asp-action="Editar" asp-route-id="@p.Id">Editar</a>
-            <a asp-action="Deletar" asp-route-id="@p.Id">Deletar</a>
-        </div>
+
+        @foreach (var p in Model)
+        {
+            <div class="card m-3 col" >
+
+                <img src="https://placehold.co/300" class="card-img-top p-0" alt="...">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center">Tags referentes a publicação</li>
+                </ul>
+                <div class="card-body text-center">
+                    <h3 class="m-0 card-title fs-3">@p.Titulo</h3>
+                </div>
+
+                <div class="card-footer text-center ">
+                    <a class="btn btn-success" asp-action="Editar" asp-route-id="@p.Id">Visualizar</a>
+                    <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>
+                    <a class="btn btn-danger" asp-action="Deletar" asp-route-id="@p.Id">Deletar</a>
+
+                </div>
+                <span class="px-2">
+                    @p.Data
+                </span>
+            </div>
+            @* <div class="card p-3">
+    <img class="card-img-top"/ src="model">
+    <p class="m-0 card-title">Titulo: @p.Titulo</p>
+    <p class="m-0 card-subtitle">Subtitulo: @p.SubtTitulo</p>
+    <p class="m-0 card-text">Conteudo: @p.Conteudo</p>
+    <hr />
+    <span>
+    @p.Data,
+    @if (p.DataAtualizacao != DateTime.MinValue)
+    {
+    @p.DataAtualizacao
     }
-}
-else
-{
-    <h1>Não existem publicações!</h1>
-}
+    ,
+    @p.NomeAutor
+    </span>
+    <a asp-action="Editar" asp-route-id="@p.Id">Editar</a>
+    <a asp-action="Deletar" asp-route-id="@p.Id">Deletar</a>
+    </div> *@
+        }
+    }
+    else
+    {
+        <h1>Não existem publicações!</h1>
+    }
+</div>
+
