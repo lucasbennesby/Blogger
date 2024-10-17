@@ -23,6 +23,8 @@ namespace Blogger.Models
         [MaybeNull]
         public DateTime DataAtualizacao {  get; set; }
         public string Imagem { get; set; }
+
+        public List<Comentario> Comentarios { get; set; }
     }
     
 }

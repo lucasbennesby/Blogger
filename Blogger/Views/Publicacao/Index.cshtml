@@ -13,28 +13,32 @@
     @if (Model.Count() > 0)
     {
 
-        @foreach (var p in Model)
-        {
-            <div class="card m-3 col" >
+               
+            @foreach (var p in Model)
+            {
 
-                <img src="/imagens/@p.Imagem" class="card-img-top p-0" alt="...">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-center">Tags referentes a publicação</li>
-                </ul>
-                <div class="card-body text-center">
-                    <h3 class="m-0 card-title fs-3">@p.Titulo</h3>
-                </div>
-                <div class="card-footer text-center ">
-                    <a class="btn btn-success" asp-action="Editar" asp-route-id="@p.Id">Visualizar</a>
-                    <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>
-                    <a class="btn btn-danger" asp-action="Deletar" asp-route-id="@p.Id">Deletar</a>
+                <div class="card m-3 col-3 ">
+                    <div class="container d-flex">
+                    <img src="/imagens/@p.Imagem" style="width:150px;height:150px;" class="p-0" alt="...">
+                   </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-center">Tags referentes a publicação</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <h3 class="m-0 card-title fs-3">@p.Titulo</h3>
+                    </div>
+                    <div class="card-footer text-center ">
+                        <a class="btn btn-success" asp-action="Detalhes" asp-route-id="@p.Id">Visualizar</a>
+                        <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>
+                        <a class="btn btn-danger" asp-action="Deletar" asp-route-id="@p.Id">Deletar</a>
 
+                    </div>
+                    <span class="px-2">
+                        @p.Data
+                    </span>
                 </div>
-                <span class="px-2">
-                    @p.Data
-                </span>
-            </div>           
-        }
+            }      
+               
     }
     else
     {

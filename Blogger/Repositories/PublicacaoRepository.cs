@@ -65,7 +65,9 @@ namespace Blogger.Repositories
 
         public async Task<Publicacao> BuscarPorId(int id)
         {
-            Publicacao publicacao = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
+            Publicacao publicacao = await _contextoBlogger.Publicacao
+                .Include(x=> x.Comentarios)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return publicacao;
         }
@@ -73,6 +75,7 @@ namespace Blogger.Repositories
         public async Task Editar(Publicacao publicacao)
         {
             publicacao.DataAtualizacao = DateTime.Now;
+            publicacao.Imagem = publicacao.Imagem;
 
             _contextoBlogger.Publicacao.Update(publicacao);
            await _contextoBlogger.SaveChangesAsync();

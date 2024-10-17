@@ -59,5 +59,12 @@ namespace Blogger.Controllers
             return RedirectToAction("Index");
             
         }
+
+        public async Task<IActionResult> Detalhes(int id)
+        {
+            var publicacao = await _publicacaoRepository.BuscarPorId(id);
+
+            return View(publicacao);
+        }
     }
 }

@@ -1,0 +1,50 @@
+﻿@using Blogger.Models
+@model Publicacao
+
+<div>
+    <img src="/imagens/@Model.Imagem" style=" width:fit-content;height:150px;" class="p-0 m-auto" alt="...">
+    <h2>@Model.Titulo</h2>
+    <h5>@Model.SubtTitulo</h5>
+    <hr />
+    <div>
+        @Model.Conteudo
+    </div>
+
+</div>
+<div>
+    <span>
+        Autor: @Model.NomeAutor
+        / @Model.Data
+        @if (Model.DataAtualizacao != DateTime.MinValue)
+        {
+            <span>Editado em: @Model.DataAtualizacao</span>
+        }
+    </span>
+
+    <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2>Comentarios:</h2>
+        @if (Model.Comentarios.Count > 0 && Model.Comentarios != null)
+        {
+
+            @foreach (var c in Model.Comentarios)
+            {
+                <div class="border p-3">
+                    <h5>@c.Autor</h5>
+                    <p>@c.Descricao</p>
+                    <span>
+                        @c.Data
+                    </span>
+                    <s>testando a tag s</s>
+                </div>
+            }
+        }
+        else
+        {
+            <h3>Não existem comentarios para essa publicação!</h3>
+        }
+    </div>
+</div>
