@@ -45,9 +45,9 @@ namespace Blogger.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(Publicacao publicacao)
+        public async Task<IActionResult> Editar(Publicacao publicacao, IFormFile imagem)
         {
-            await _publicacaoRepository.Editar(publicacao);
+            await _publicacaoRepository.Editar(publicacao, imagem);
 
             return RedirectToAction("Index");
         }

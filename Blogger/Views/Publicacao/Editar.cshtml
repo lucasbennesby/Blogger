@@ -1,9 +1,18 @@
 ﻿@model Publicacao
 
-<form asp-action="Editar" method="post">
+<form asp-action="Editar" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="Data" />
     <input type="hidden" asp-for="Imagem" />
+    <div>
+        <label for="arquivoDeImagem">
+            <img src="/imagens/@Model.Imagem" id="imagem" style="width:300px; height:170px;" />
+        </label>
+    </div>
+    <div>
+        <label>Imagem:</label>
+        <input id="arquivoDeImagem" type="file" name="imagem" />
+    </div>
     <div>
         <label for="titulo">Título: </label>
         <input asp-for="Titulo" id="titulo" type="text" required />
@@ -23,3 +32,24 @@
     <button asp type="submit">Editar</button>
     <a asp-action="Index">Cancelar</a> 
 </form>
+
+@* faz com que a imagem apareça em miniatura *@
+<script>
+    const entradaDeArquivo = document.querySelector("#arquivoDeImagem");
+    entradaDeArquivo.addEventListener("change", function (e) {
+
+        const alvoDeEntrada = e.target;
+        const arquivo = alvoDeEntrada.files[0];
+
+        if(arquivo){
+            const leitor = new FileReader();
+
+            leitor.addEventListener("load",function(e){
+                const alvoDoLeitor = e.target;
+                const imagem = document.querySelector("#imagem");
+                imagem.src = alvoDoLeitor.result;
+            })
+            leitor.readAsDataURL(arquivo);
+        }
+    })
+</script>

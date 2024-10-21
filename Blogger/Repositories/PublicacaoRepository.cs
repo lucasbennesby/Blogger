@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Blogger.Repositories
 {
     public class PublicacaoRepository : IPublicacaoRepository
-    {  
+    {
         private readonly ContextoBlogger _contextoBlogger;
         private readonly string _sistema;
 
-        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema) 
+        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema)
         {
             _contextoBlogger = context;
             _sistema = sistema.WebRootPath;
@@ -27,7 +27,7 @@ namespace Blogger.Repositories
             publicacao.SubtTitulo = publicacaoVM.SubtTitulo;
             publicacao.Conteudo = publicacaoVM.Conteudo;
             publicacao.Data = DateTime.Now;
-            publicacao.DataAtualizacao = DateTime.MinValue;        
+            publicacao.DataAtualizacao = DateTime.MinValue;
             publicacao.NomeAutor = publicacaoVM.NomeAutor;
             publicacao.Imagem = caminhoDaImagem;
 
@@ -36,14 +36,14 @@ namespace Blogger.Repositories
 
             return publicacao;
         }
-        
+
         private string GerarCaminhoDaImagemESalvarNaPasta(IFormFile imagem)
         {
             var codigoUnicoDaImagem = Guid.NewGuid().ToString();
             var nomeDaImagem = codigoUnicoDaImagem + imagem.FileName.Trim().Replace(" ", "").ToLower();
             var pastaDeImagens = _sistema + "\\imagens\\";
 
-            if (!Directory.Exists(pastaDeImagens)) 
+            if (!Directory.Exists(pastaDeImagens))
             {
                 Directory.CreateDirectory(pastaDeImagens);
             }
@@ -51,8 +51,8 @@ namespace Blogger.Repositories
             using (var stream = File.Create(pastaDeImagens + nomeDaImagem))
             {
                 imagem.CopyToAsync(stream).Wait();
-            }     
-            
+            }
+
             return nomeDaImagem;
         }
 
@@ -66,30 +66,40 @@ namespace Blogger.Repositories
         public async Task<Publicacao> BuscarPorId(int id)
         {
             Publicacao publicacao = await _contextoBlogger.Publicacao
-                .Include(x=> x.Comentarios)
+                .Include(x => x.Comentarios)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return publicacao;
         }
 
-        public async Task Editar(Publicacao publicacao)
+        public async Task Editar(Publicacao publicacao, IFormFile imagem)
         {
+            var pastaDeImagens = _sistema + "\\imagens\\";
+
+            if (imagem == null)
+            {
+                publicacao.Imagem = publicacao.Imagem;
+            }
+            else
+            {
+                File.Delete(pastaDeImagens + publicacao.Imagem);
+                var caminhoImagem = GerarCaminhoDaImagemESalvarNaPasta(imagem);
+                publicacao.Imagem = caminhoImagem;
+            }
             publicacao.DataAtualizacao = DateTime.Now;
-            publicacao.Imagem = publicacao.Imagem;
 
             _contextoBlogger.Publicacao.Update(publicacao);
-           await _contextoBlogger.SaveChangesAsync();
-
+            await _contextoBlogger.SaveChangesAsync();
         }
 
         public async Task Deletar(int id)
         {
             var pastaDeImagens = _sistema + "\\imagens\\";
-            var publicaco = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
+            var publicacao = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
 
-            File.Delete(pastaDeImagens + publicaco.Imagem);
+            File.Delete(pastaDeImagens + publicacao.Imagem);
 
-            _contextoBlogger.Publicacao.Remove(publicaco);
+            _contextoBlogger.Publicacao.Remove(publicacao);
             await _contextoBlogger.SaveChangesAsync();
 
         }

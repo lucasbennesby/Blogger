@@ -10,7 +10,7 @@ namespace Blogger.Repositories
 
         Task<Publicacao> BuscarPorId(int id);
 
-        Task Editar(Publicacao publicacao);
+        Task Editar(Publicacao publicacao, IFormFile imagem);
 
         Task Deletar(int id);
 
