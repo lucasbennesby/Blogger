@@ -51,7 +51,7 @@ namespace Blogger.Repositories
             using (var stream = File.Create(pastaDeImagens + nomeDaImagem))
             {
                 imagem.CopyToAsync(stream).Wait();
-            }
+            }     
             
             return nomeDaImagem;
         }
@@ -84,7 +84,11 @@ namespace Blogger.Repositories
 
         public async Task Deletar(int id)
         {
+            var pastaDeImagens = _sistema + "\\imagens\\";
             var publicaco = await _contextoBlogger.Publicacao.FirstOrDefaultAsync(x => x.Id == id);
+
+            File.Delete(pastaDeImagens + publicaco.Imagem);
+
             _contextoBlogger.Publicacao.Remove(publicaco);
             await _contextoBlogger.SaveChangesAsync();
 

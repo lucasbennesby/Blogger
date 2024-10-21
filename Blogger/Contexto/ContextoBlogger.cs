@@ -9,8 +9,8 @@ namespace Blogger.Contexto
         {
 
         }
-
         public DbSet<Publicacao> Publicacao { get; set; }
+        public DbSet<Comentario> Comentario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

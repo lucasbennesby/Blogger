@@ -1,5 +1,8 @@
-﻿@using Blogger.Models
+﻿@using Blogger.Models.ViewModels
 @model Publicacao
+@{
+    var comentarioVM = new CadastrarComentarioViewModel { PublicacaoId = Model.Id };
+}
 
 <div>
     <img src="/imagens/@Model.Imagem" style=" width:fit-content;height:150px;" class="p-0 m-auto" alt="...">
@@ -9,7 +12,6 @@
     <div>
         @Model.Conteudo
     </div>
-
 </div>
 <div>
     <span>
@@ -20,10 +22,10 @@
             <span>Editado em: @Model.DataAtualizacao</span>
         }
     </span>
-
+    <br />
+    <br />
+    <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />
     <div>
-        <br />
-        <br />
         <br />
         <br />
         <h2>Comentarios:</h2>
@@ -45,6 +47,8 @@
         else
         {
             <h3>Não existem comentarios para essa publicação!</h3>
+            <br />
+            <br />
         }
     </div>
 </div>

@@ -1,5 +1,7 @@
 ﻿using Blogger.Contexto;
 using Blogger.Models;
+using Blogger.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Repositories
 {
@@ -11,6 +13,21 @@ namespace Blogger.Repositories
         {
 
             _contextoBlogger = context;
+        }
+
+        [HttpPost]
+        public async Task Criar(CadastrarComentarioViewModel comentarioVM)
+        {
+            var comentario = new Comentario
+            {
+                Autor = comentarioVM.Autor,
+                Data = DateTime.Now,
+                Descricao = comentarioVM.Descricao,
+                PublicacaoId = comentarioVM.PublicacaoId,
+            };
+
+            _contextoBlogger.Comentario.Add(comentario);
+            await _contextoBlogger.SaveChangesAsync();           
         }
 
         public Task<List<Comentario>> Listar(int publicacaoId)
