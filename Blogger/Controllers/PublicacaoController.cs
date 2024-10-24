@@ -52,12 +52,19 @@ namespace Blogger.Controllers
             return RedirectToAction("Index");
         }
 
-        
-        public async Task<IActionResult> Deletar(int id)
+
+        public async Task<JsonResult> Deletar(int id)
         {
-           await _publicacaoRepository.Deletar(id);
-            return RedirectToAction("Index");
-            
+            await _publicacaoRepository.Deletar(id);
+
+            var publicacao = await _publicacaoRepository.BuscarPorId(id);
+
+            if (publicacao == null)
+            {
+                return Json(new { mensagem = "Apagado com sucesso!" });
+            }
+
+            return Json(new { mensagem = "Erro ao apagar publicação" });
         }
 
         public async Task<IActionResult> Detalhes(int id)
