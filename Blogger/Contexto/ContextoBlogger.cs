@@ -11,6 +11,7 @@ namespace Blogger.Contexto
         }
         public DbSet<Publicacao> Publicacao { get; set; }
         public DbSet<Comentario> Comentario { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

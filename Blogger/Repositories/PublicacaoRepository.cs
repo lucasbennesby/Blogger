@@ -2,7 +2,6 @@
 using Blogger.Contexto;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
