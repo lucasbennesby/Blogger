@@ -1,5 +1,6 @@
 using Blogger.Contexto;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContextoBlogger>(options => 
     options.UseMySql(builder.Configuration.GetConnectionString("dbBlogger"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("dbBlogger"))));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();

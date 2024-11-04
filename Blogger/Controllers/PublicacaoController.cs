@@ -2,6 +2,7 @@
 using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 
@@ -24,6 +25,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Cadastrar()
         {
             return View();

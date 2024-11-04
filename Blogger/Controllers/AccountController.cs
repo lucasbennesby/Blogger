@@ -31,5 +31,17 @@ namespace Blogger.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
+        {
+            if(ModelState.IsValid)
+            {
+                var logado = await _usuarioRepository.AutorizarUsuario(loginVM,HttpContext);
+                
+                if (logado)
+                    return RedirectToAction("Index", "Publicacao");
+            }
+            return View();
+        }
     }
 }
