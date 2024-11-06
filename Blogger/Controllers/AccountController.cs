@@ -1,5 +1,7 @@
 ﻿using Blogger.Models.ViewModels;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Controllers
@@ -42,6 +44,13 @@ namespace Blogger.Controllers
                     return RedirectToAction("Index", "Publicacao");
             }
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Publicacao");
         }
     }
 }

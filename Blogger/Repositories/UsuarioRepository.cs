@@ -34,10 +34,7 @@ namespace Blogger.Repositories
             }
             return false;
         }
-
-        
-
-
+              
         public async Task CadastrarUsuario(CadastrarUsuarioViewModel usuarioVM)
         {
             var usuario = new Usuario();
@@ -48,5 +45,6 @@ namespace Blogger.Repositories
             _usuarioContext.Add(usuario);
             await _usuarioContext.SaveChangesAsync();
         }
+
     }
 }

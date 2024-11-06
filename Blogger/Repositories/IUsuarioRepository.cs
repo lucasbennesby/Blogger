@@ -7,7 +7,6 @@ namespace Blogger.Repositories
         Task CadastrarUsuario(CadastrarUsuarioViewModel usuarioVM);
 
         Task<bool> AutorizarUsuario(LoginViewModel usuarioVM, HttpContext context);
-
     }
 }
     
