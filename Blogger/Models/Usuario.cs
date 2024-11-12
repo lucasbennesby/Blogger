@@ -15,5 +15,8 @@ namespace Blogger.Models
         [Required]
         [StringLength(20)]
         public string Senha { get; set; }
+        [Required]
+        public string Perfil { get; set; }
+
     }
 }

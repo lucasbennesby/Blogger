@@ -14,6 +14,10 @@ builder.Services.AddDbContext<ContextoBlogger>(options =>
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Usuario Padrao", policy => policy.RequireClaim("User"))
+    .AddPolicy("pro", policy => policy.RequireClaim("UserPro"));
+
 builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();

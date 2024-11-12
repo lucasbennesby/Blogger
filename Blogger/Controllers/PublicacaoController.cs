@@ -19,13 +19,14 @@ namespace Blogger.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var usuario = HttpContext.User;
             var lista = await _publicacaoRepository.Listar();
-
+            
             return View(lista);
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "pro")]
         public IActionResult Cadastrar()
         {
             return View();

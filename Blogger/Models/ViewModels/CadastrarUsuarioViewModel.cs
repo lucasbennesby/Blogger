@@ -20,5 +20,7 @@ namespace Blogger.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Senha")]
         public string ConfirmarSenha { get; set; }
+
+        public string Perfil {  get; set; }
     }
 }
