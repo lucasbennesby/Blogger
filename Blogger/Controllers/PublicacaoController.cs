@@ -26,7 +26,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "pro")]
+        [Authorize(Policy = "Usuario Pro")]
         public IActionResult Cadastrar()
         {
             return View();

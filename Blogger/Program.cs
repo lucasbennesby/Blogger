@@ -15,8 +15,9 @@ builder.Services.AddDbContext<ContextoBlogger>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("Usuario Padrao", policy => policy.RequireClaim("User"))
-    .AddPolicy("pro", policy => policy.RequireClaim("UserPro"));
+    .AddPolicy("Usuario Padrao", policy => policy.RequireRole("User"))
+    .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"))
+    ;
 
 builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
