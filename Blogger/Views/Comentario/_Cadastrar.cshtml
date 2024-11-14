@@ -5,11 +5,9 @@
     <form asp-action="Criar" asp-controller="Comentario" method="post">
         <input hidden asp-for="PublicacaoId"/>
         <h5>Escreva seu comentario</h5>
-        <label for="nome">Nome</label>
-        <input asp-for="Autor" type="text" id="nome" />
-        <br />
         <label for="comentario">Comentario</label>
         <input asp-for="Descricao" type="text" id="comentario" />
+        <span asp-validation-for="Descricao" class="text-danger"></span>
         <br />
         <button type="submit">Comentar</button>
     </form>

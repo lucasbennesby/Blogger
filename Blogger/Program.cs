@@ -12,12 +12,21 @@ builder.Services.AddDbContext<ContextoBlogger>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("dbBlogger"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("dbBlogger"))));
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "Credenciais";
+        options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/LogOut";
+    } );
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Usuario Padrao", policy => policy.RequireRole("User"))
-    .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"))
-    ;
+    .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"));
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();

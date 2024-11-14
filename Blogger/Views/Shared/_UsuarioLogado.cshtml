@@ -1,9 +1,10 @@
-﻿
+﻿@using System.Security.Claims
+
 @if (Context.User.Identity!.Name != null)
 {
     <form class="navbar-right " asp-controller="Account" asp-action="LogOut" method="post">
         <ul class="nav navbar-nav navbar-right">
-            <li class="nav-link">Olá, @Context.User.Identity.Name</li>
+            <li class="nav-link">Olá, @Context.User.Identity.Name | @Context.User.FindFirst(ClaimTypes.Role).Value</li>
             <button type="submit">| Sair</button>
         </ul>
     </form> 

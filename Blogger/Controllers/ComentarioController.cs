@@ -1,5 +1,6 @@
 ﻿using Blogger.Models.ViewModels;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Controllers
@@ -19,9 +20,11 @@ namespace Blogger.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Criar(CadastrarComentarioViewModel comentarioVM)
         {
-            await _comentarioRepository.Criar(comentarioVM);
+            if(ModelState.IsValid)
+                await _comentarioRepository.Criar(comentarioVM);
 
             return RedirectToAction("Detalhes", "Publicacao", new { id = comentarioVM.PublicacaoId });
 

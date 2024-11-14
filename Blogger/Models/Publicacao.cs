@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 
@@ -25,6 +26,11 @@ namespace Blogger.Models
         public string Imagem { get; set; }
 
         public List<Comentario> Comentarios { get; set; }
+
+        [ForeignKey("UsuarioId")]
+
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }    
     }
     
 }

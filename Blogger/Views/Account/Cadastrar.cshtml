@@ -32,11 +32,14 @@
                 <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Perfil" class="control-label"></label>
                 <select asp-for="Perfil" class="form-control">
                     <option selected disabled>Selecione...</option>
                     <option value="User">Comentador</option>
                     <option value="UserPro">Publicador + Comentador</option>
                 </select>
+                <span asp-validation-for="Perfil" class="text-danger"></span>
+
             </div>
             <hr />
             <div class="form-group">

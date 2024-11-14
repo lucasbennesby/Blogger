@@ -24,7 +24,10 @@ namespace Blogger.Repositories
             {
                 var claims = new List<Claim>()
                 {
-                    new(ClaimTypes.Name, usuario.Nome)
+                    new(ClaimTypes.Name, usuario.Nome),
+                    new(ClaimTypes.Email, usuario.Email),
+                    new("UsuarioId", usuario.Id.ToString()),
+                    
                 };
                
                 if (usuario.Perfil == "User")

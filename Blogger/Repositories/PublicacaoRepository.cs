@@ -3,6 +3,8 @@ using Blogger.Contexto;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 
 
 namespace Blogger.Repositories
@@ -11,11 +13,13 @@ namespace Blogger.Repositories
     {
         private readonly ContextoBlogger _contextoBlogger;
         private readonly string _sistema;
+        private readonly ClaimsPrincipal _usuarioService;
 
-        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema)
+        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema, IHttpContextAccessor httpContextAccessor)
         {
             _contextoBlogger = context;
             _sistema = sistema.WebRootPath;
+            _usuarioService = httpContextAccessor.HttpContext.User;
         }
         public async Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM, IFormFile imagem)
         {
@@ -27,8 +31,9 @@ namespace Blogger.Repositories
             publicacao.Conteudo = publicacaoVM.Conteudo;
             publicacao.Data = DateTime.Now;
             publicacao.DataAtualizacao = DateTime.MinValue;
-            publicacao.NomeAutor = publicacaoVM.NomeAutor;
             publicacao.Imagem = caminhoDaImagem;
+            publicacao.UsuarioId = int.Parse(_usuarioService.FindFirst("UsuarioId").Value);
+            publicacao.NomeAutor = _usuarioService.FindFirst(ClaimTypes.Name).Value;
 
             _contextoBlogger.Add(publicacao);
             await _contextoBlogger.SaveChangesAsync();

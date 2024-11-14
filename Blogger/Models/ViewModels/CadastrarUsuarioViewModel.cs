@@ -18,9 +18,9 @@ namespace Blogger.Models.ViewModels
         [Required(ErrorMessage = "campo obrigatorio")]
         [StringLength(20, ErrorMessage = "Limite maximo de 20 caracteres")]
         [DataType(DataType.Password)]
-        [Compare("Senha")]
+        [Compare("Senha",ErrorMessage ="As senhas não são iguais")]
         public string ConfirmarSenha { get; set; }
-
+        [Required(ErrorMessage = "É necessário selecionar um tipo de perfil")]
         public string Perfil {  get; set; }
     }
 }

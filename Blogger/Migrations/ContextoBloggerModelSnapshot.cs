@@ -46,9 +46,14 @@ namespace Blogger.Migrations
                     b.Property<int>("PublicacaoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PublicacaoId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentario");
                 });
@@ -90,7 +95,12 @@ namespace Blogger.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Publicacao");
                 });
@@ -129,16 +139,42 @@ namespace Blogger.Migrations
 
             modelBuilder.Entity("Blogger.Models.Comentario", b =>
                 {
-                    b.HasOne("Blogger.Models.Publicacao", null)
+                    b.HasOne("Blogger.Models.Publicacao", "Publicacao")
                         .WithMany("Comentarios")
                         .HasForeignKey("PublicacaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Blogger.Models.Usuario", "Usuario")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Publicacao");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Blogger.Models.Publicacao", b =>
+                {
+                    b.HasOne("Blogger.Models.Usuario", "Usuario")
+                        .WithMany("Publicacoes")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Blogger.Models.Publicacao", b =>
                 {
                     b.Navigation("Comentarios");
+                });
+
+            modelBuilder.Entity("Blogger.Models.Usuario", b =>
+                {
+                    b.Navigation("Comentarios");
+
+                    b.Navigation("Publicacoes");
                 });
 #pragma warning restore 612, 618
         }

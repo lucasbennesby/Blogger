@@ -18,5 +18,8 @@ namespace Blogger.Models
         [Required]
         public string Perfil { get; set; }
 
+        public List<Publicacao> Publicacoes { get; set; }
+        public List<Comentario> Comentarios { get; set; }
+
     }
 }
