@@ -74,6 +74,8 @@ namespace Blogger.Controllers
         {
             var publicacao = await _publicacaoRepository.BuscarPorId(id);
 
+            ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
+
             return View(publicacao);
         }
     }

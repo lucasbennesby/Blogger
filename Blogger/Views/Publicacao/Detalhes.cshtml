@@ -2,6 +2,7 @@
 @model Publicacao
 @{
     var comentarioVM = new CadastrarComentarioViewModel { PublicacaoId = Model.Id };
+    var usuarioAutenticado = ViewBag.UsuarioLogado;
 }
 
 <div>
@@ -24,7 +25,10 @@
     </span>
     <br />
     <br />
-    <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />
+    @if (usuarioAutenticado)
+    {
+        <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />        
+    }
     <div>
         <br />
         <br />
@@ -40,7 +44,6 @@
                     <span>
                         @c.Data
                     </span>
-                    <s>testando a tag s</s>
                 </div>
             }
         }

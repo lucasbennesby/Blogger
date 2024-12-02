@@ -44,17 +44,24 @@ namespace Blogger.Repositories
         }
 
 
-        public async Task CadastrarUsuario(CadastrarUsuarioViewModel usuarioVM)
+        public async Task<Usuario> CadastrarUsuario(CadastrarUsuarioViewModel usuarioVM)
         {
             var usuario = new Usuario();
-            usuario.Nome = usuarioVM.Nome;
+            usuario.Nome = usuarioVM.Nome;         
             usuario.Email = usuarioVM.Email;
             usuario.Senha = usuarioVM.Senha;
             usuario.Perfil = usuarioVM.Perfil;
 
             _usuarioContext.Add(usuario);
             await _usuarioContext.SaveChangesAsync();
+
+            return usuario;
         }
-      
+        public async Task<bool> VerificarEmail(string email)
+        {
+            var emailJaExiste = await _usuarioContext.Usuario.AnyAsync(x => x.Email == email );
+            return emailJaExiste;
+        }
+
     }
 }
