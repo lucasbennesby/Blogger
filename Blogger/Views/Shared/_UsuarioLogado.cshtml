@@ -2,24 +2,32 @@
 
 @if (Context.User.Identity!.Name != null)
 {
+
     <form class="navbar-right " asp-controller="Account" asp-action="LogOut" method="post">
         <ul class="nav navbar-nav navbar-right">
+            @if (Context.User.FindFirst(ClaimTypes.Role).Value == "ADM")
+            {
+                <li class="nav-link">
+                    <a class="nav-link" asp-controller="Admin" asp-action="AdminPage">Gerenciar Usuarios</a>
+                </li>
+            }
             <li class="nav-link">Olá, @Context.User.Identity.Name | @Context.User.FindFirst(ClaimTypes.Role).Value</li>
-            <button type="submit">| Sair</button>
+            <button type="submit">| Sair</button>         
         </ul>
-    </form> 
+    </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li> 
+        <li>
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-        </li>          
-        <li> 
+        </li>
+        <li>
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Cadastrar">Cadastrar</a>
-        </li>          
+        </li>
+
     </ul>
-} 
+}
 
 
 

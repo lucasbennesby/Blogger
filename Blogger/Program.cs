@@ -16,7 +16,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.Cookie.Name = "Credenciais";
-        options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true;
         options.LoginPath = "/Account/Login";
         options.LogoutPath = "/Account/LogOut";
@@ -24,13 +24,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Usuario Padrao", policy => policy.RequireRole("User"))
-    .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"));
+    .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"))
+    .AddPolicy("ADM", policy => policy.RequireRole("ADM"));
 
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 var app = builder.Build();
 

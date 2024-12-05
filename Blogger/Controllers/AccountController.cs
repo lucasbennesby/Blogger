@@ -54,8 +54,10 @@ namespace Blogger.Controllers
                 var logado = await _usuarioRepository.AutorizarUsuario(loginVM,HttpContext);
                 
                 if (logado)
+
                     return RedirectToAction("Index", "Publicacao");
             }
+
             return View();
         }
 

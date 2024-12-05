@@ -29,11 +29,13 @@ namespace Blogger.Repositories
                     new("UsuarioId", usuario.Id.ToString()),
                     
                 };
-               
+
                 if (usuario.Perfil == "User")
-                     claims.Add(new Claim(ClaimTypes.Role, "User"));
-                else
+                    claims.Add(new Claim(ClaimTypes.Role, "User"));
+                else if (usuario.Perfil == "UserPro")
                     claims.Add(new Claim(ClaimTypes.Role, "UserPro"));
+                else
+                    claims.Add(new Claim(ClaimTypes.Role, "ADM"));
                 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

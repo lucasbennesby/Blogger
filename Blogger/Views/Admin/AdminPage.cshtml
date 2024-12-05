@@ -1,0 +1,42 @@
+﻿@using Blogger.Models.ViewModels
+@model List<Usuario>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">User Name</th>
+            <th scope="col">User Email</th>
+            <th scope="col">User Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <th scope="row">@u.Id</th>
+                <td>@u.Nome</td>
+                <td>@u.Email</td>
+                <td>
+                    <span class="senha-censurada" id="senha-@u.Id">********</span>
+                </td>
+                <td>
+                    <button class="btn btn-dark" type="button" onclick="toggleSenha(@u.Id, '@u.Senha')">Exibir senha</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function toggleSenha(id, senha) {
+        const senhaElement = document.getElementById(`senha-${id}`);
+        const isCensored = senhaElement.textContent === '********';
+
+        if (isCensored) {
+            senhaElement.textContent = senha;
+        } else {
+            senhaElement.textContent = '********';
+        }
+    }
+</script>
