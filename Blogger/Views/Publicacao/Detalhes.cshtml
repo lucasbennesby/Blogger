@@ -11,13 +11,14 @@
     <h5>@Model.SubtTitulo</h5>
     <hr />
     <div>
+        @Html.Raw(Model.Conteudo)
         @Model.Conteudo
     </div>
 </div>
 <div>
     <span>
         Autor: @Model.NomeAutor
-        / @Model.Data
+        | @Model.Data
         @if (Model.DataAtualizacao != DateTime.MinValue)
         {
             <span>Editado em: @Model.DataAtualizacao</span>

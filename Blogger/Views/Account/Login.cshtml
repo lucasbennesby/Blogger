@@ -37,3 +37,20 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var type = '@TempData["NotificationType"]';
+        var message = '@TempData["NotificationMessage"]';
+
+        if (type && message) {
+            new Noty({
+                type: type, 
+                text: message,
+                timeout: 3000,
+                progressBar: true,
+                layout: 'topLeft'
+            }).show();
+        }
+    });
+</script>
+

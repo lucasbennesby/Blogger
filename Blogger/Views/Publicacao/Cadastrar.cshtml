@@ -1,48 +1,73 @@
 ﻿@using Blogger.Models.ViewModels
 @model CadastrarPublicacaoViewModel
 
-<form asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+
+<form id="form" asp-action="Cadastrar" method="post" enctype="multipart/form-data">
     <div>
         <label for="arquivoDeImagem">
-            <img id="imagem" style="width:300px; height:170px;" />
+            <img id="imagem"  style="width:300px; height:170px;" />
         </label>
     </div>
     <div>
         <label>Imagem:</label>
         <input required id="arquivoDeImagem" type="file" name="imagem" />
     </div>
-   <div>
-       <label for="titulo">Título: </label>
-       <input asp-for="Titulo" id="titulo" type="text" required />
-   </div>
-   <div>
-       <label for="subTitulo">SubTitulo: </label>
+    <div>
+        <label for="titulo">Título: </label>
+        <input asp-for="Titulo" id="titulo" type="text" required />
+    </div>
+    <div>
+        <label for="subTitulo">SubTitulo: </label>
         <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
-   </div>
-   <div>
-       <label for="conteudo">Conteúdo: </label>
-        <input asp-for="Conteudo" id="conteudo" type="text" required />
-   </div>
-    <button asp type="submit">Criar</button>
+    </div>
+    <div id="editor" required></div>
+    <input type="hidden" id="Conteudo" asp-for="Conteudo" />
+
+    <button id="submit" type="submit">Criar</button>
 </form>
+
+<script>
+    const options = {
+        debug: 'info',
+        modules: {
+            toolbar: true,
+        },
+        placeholder: 'Escreva seu conteúdo...',
+        theme: 'snow'
+    };
+    const quill = new Quill('#editor', options);
+    const conteudo = document.querySelector("#Conteudo");
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+        // Captura o conteúdo do Quill
+        const quillContent = quill.getContents(); // Delta (estrutura JSON do Quill)
+        console.log(quillContent);
+        conteudo.value = JSON.stringify(quillContent); // Serializa e atribui ao campo oculto
+        console.log(conteudo.value);
+
+    });   
+</script>
+
 
 @* faz com que a imagem apareça em miniatura *@
 <script>
     const entradaDeArquivo = document.querySelector("#arquivoDeImagem");
     entradaDeArquivo.addEventListener("change", function (e) {
-
         const alvoDeEntrada = e.target;
         const arquivo = alvoDeEntrada.files[0];
 
-        if(arquivo){
+        if (arquivo) {
             const leitor = new FileReader();
 
-            leitor.addEventListener("load",function(e){
+            leitor.addEventListener("load", function (e) {
                 const alvoDoLeitor = e.target;
                 const imagem = document.querySelector("#imagem");
                 imagem.src = alvoDoLeitor.result;
-            })
+            });
+
             leitor.readAsDataURL(arquivo);
         }
-    })
+    });
 </script>
+
+

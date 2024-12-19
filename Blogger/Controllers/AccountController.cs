@@ -52,12 +52,17 @@ namespace Blogger.Controllers
             if(ModelState.IsValid)
             {
                 var logado = await _usuarioRepository.AutorizarUsuario(loginVM,HttpContext);
-                
+
                 if (logado)
+                {
+                    TempData["NotificationType"] = "success";
+                    TempData["NotificationMessage"] = "Logado com Sucesso!";
 
                     return RedirectToAction("Index", "Publicacao");
+                }
             }
-
+            TempData["NotificationType"] = "error";
+            TempData["NotificationMessage"] = "Email ou Senha incorretos!";
             return View();
         }
 

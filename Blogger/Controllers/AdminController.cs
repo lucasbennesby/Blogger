@@ -21,6 +21,11 @@ namespace Blogger.Controllers
 
             return View(usuarios);
         }
-       
+
+        public IActionResult Denied()
+        {         
+            return View();
+        }
+
     }
 }
