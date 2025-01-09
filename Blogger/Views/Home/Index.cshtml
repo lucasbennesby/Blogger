@@ -2,9 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a asp-controller="Publicacao" asp-action="Index">Publicacoes</a>
+<div class="row text-center">
+    <h1 class="display-4 col-12">Bem vindo(a) ao Blogger!</h1>
 
+</div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <p>Este é um projeto pessoal desenvolvido para fins de estudo</p>
+        <p class="text-break">
+            O projeto tem como intuito funcionar similar a um blog, onde usuarios podem se cadastrar para criar postagens sobre os mais variados assuntos, as publicações estão
+            <a asp-controller="Publicacao" asp-action="Index">aqui</a>.
+        </p>
+    </div>
+    <div class="col-4"></div>
 </div>

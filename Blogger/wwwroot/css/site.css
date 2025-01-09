@@ -18,5 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    overscroll-behavior-y:none;
+    font-family: "Georgia", serif; /* Estilo clássico e legível */
+    font-size: 18px; /* Tamanho de fonte confortável */
+    line-height: 1.6; /* Espaçamento entre linhas */
+    color: #333; /* Cor de texto agradável para leitura */
+    background-color: #f8f8f8; /* Fundo claro */
+    margin: 0;
 }

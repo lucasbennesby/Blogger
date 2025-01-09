@@ -1,5 +1,8 @@
 ﻿@model Publicacao
 
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+
 <form asp-action="Editar" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="Data" />
@@ -22,19 +25,16 @@
         <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
     </div>
     <div>
-        <label for="conteudo">Conteúdo: </label>
-        <input asp-for="Conteudo" id="conteudo" type="text" required />
+        <input type="hidden" id="Conteudo" asp-for="Conteudo" />
+        <div id="editor"></div>
     </div>
-    <div>
-        <label for="autor">Autor: </label>
-        <input asp-for="NomeAutor" id="autor" type="text" required />
-    </div>
-    <button asp type="submit">Editar</button>
+    <button type="submit" id="submit">Editar</button>
     <a asp-action="Index">Cancelar</a> 
 </form>
 
 @* faz com que a imagem apareça em miniatura *@
 <script>
+    
     const entradaDeArquivo = document.querySelector("#arquivoDeImagem");
     entradaDeArquivo.addEventListener("change", function (e) {
 
@@ -51,5 +51,26 @@
             })
             leitor.readAsDataURL(arquivo);
         }
+    })
+
+    const options = {
+        debug: 'info',
+        modules: {
+            toolbar: true,
+        },
+        placeholder: 'Escreva seu conteúdo...',
+        theme: 'snow'
+    };
+    const quill = new Quill('#editor', options);
+    const submit = document.querySelector("#submit");
+    submit.addEventListener("click", () => {
+        console.log("submitando");
+        document.querySelector("#Conteudo").value = quill.root.innerHTML;
+    })
+
+    window.addEventListener("load", () => {
+        quill.root.innerHTML = document.querySelector("#Conteudo").value
+        console.log("teste")
+
     })
 </script>

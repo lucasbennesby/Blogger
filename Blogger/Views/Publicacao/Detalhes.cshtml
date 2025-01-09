@@ -5,54 +5,62 @@
     var usuarioAutenticado = ViewBag.UsuarioLogado;
 }
 
-<div>
-    <img src="/imagens/@Model.Imagem" style=" width:fit-content;height:150px;" class="p-0 m-auto" alt="...">
-    <h2>@Model.Titulo</h2>
-    <h5>@Model.SubtTitulo</h5>
-    <hr />
-    <div>
-        @Html.Raw(Model.Conteudo)
-        @Model.Conteudo
-    </div>
-</div>
-<div>
-    <span>
-        Autor: @Model.NomeAutor
-        | @Model.Data
-        @if (Model.DataAtualizacao != DateTime.MinValue)
-        {
-            <span>Editado em: @Model.DataAtualizacao</span>
-        }
-    </span>
-    <br />
-    <br />
-    @if (usuarioAutenticado)
-    {
-        <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />        
-    }
-    <div>
-        <br />
-        <br />
-        <h2>Comentarios:</h2>
-        @if (Model.Comentarios.Count > 0 && Model.Comentarios != null)
-        {
+<div class="container row">
+    <div class="col"></div>
+    <div class="col-10 fs-5" style="text-align:justify;text-justify:inter-word;">
+        <div>
+            <div class="text-center">
+                <h1>@Model.Titulo</h1>
+            </div>
+            <h5 class="text-center">@Model.SubtTitulo</h5>
+            <hr />
+            <div class="mx-3">
+                @Html.Raw(Model.Conteudo)
+            </div>
+        </div>
+        <div>
+            <span>
+                Autor: @Model.NomeAutor
+                | @Model.Data
+                @if (Model.DataAtualizacao != DateTime.MinValue)
+                {
+                    <span>Editado em: @Model.DataAtualizacao</span>
+                }
+            </span>
+            <br />
+            <br />
+            <hr />
 
-            @foreach (var c in Model.Comentarios)
+            @if (usuarioAutenticado)
             {
-                <div class="border p-3">
-                    <h5>@c.Autor</h5>
-                    <p>@c.Descricao</p>
-                    <span>
-                        @c.Data
-                    </span>
-                </div>
+                <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />
             }
-        }
-        else
-        {
-            <h3>Não existem comentarios para essa publicação!</h3>
-            <br />
-            <br />
-        }
+            <div>
+                <br />
+                <br />
+                <h2>Comentarios:</h2>
+                @if (Model.Comentarios.Count > 0 && Model.Comentarios != null)
+                {
+                    @foreach (var c in Model.Comentarios)
+                    {
+                        <div class="border p-3">
+                            <h5>@c.Autor</h5>
+                            <p>@c.Descricao</p>
+                            <span>
+                                @c.Data
+                            </span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3>Não existem comentarios para essa publicação!</h3>
+                    <br />
+                    <br />
+                }
+            </div>
+        </div>
     </div>
+    <div class="col"></div>
 </div>
+

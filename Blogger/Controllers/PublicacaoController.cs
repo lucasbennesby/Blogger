@@ -1,10 +1,10 @@
-﻿using Blogger.Contexto;
-using Blogger.Models;
+﻿using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Blogger.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+using Microsoft.Build.ObjectModelRemoting;
+using System.Security.Claims;
 
 namespace Blogger.Controllers
 {
@@ -19,9 +19,9 @@ namespace Blogger.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var usuario = HttpContext.User;
             var lista = await _publicacaoRepository.Listar();
-            
+            ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
+            ViewBag.UsuarioId = HttpContext.User.FindFirstValue("UsuarioId");
             return View(lista);
         }
 
@@ -41,9 +41,9 @@ namespace Blogger.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Editar(int id)
-        {
-            var publicacao = await _publicacaoRepository.BuscarPorId(id);
+        {   
 
+            var publicacao = await _publicacaoRepository.BuscarPorId(id);
             return View(publicacao);
         }
 

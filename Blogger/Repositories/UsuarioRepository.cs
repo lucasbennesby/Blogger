@@ -11,7 +11,8 @@ namespace Blogger.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly ContextoBlogger _usuarioContext;
-        public UsuarioRepository(ContextoBlogger context)
+
+        public UsuarioRepository(ContextoBlogger context, IHttpContextAccessor httpContextAccessor)
         {
             _usuarioContext = context;
         }
@@ -19,15 +20,13 @@ namespace Blogger.Repositories
         public async Task<bool> AutorizarUsuario(LoginViewModel usuarioVM, HttpContext context)
         {
             var usuario = await _usuarioContext.Usuario.FirstOrDefaultAsync(x => x.Email == usuarioVM.Email && x.Senha == usuarioVM.Senha);
-
             if (usuario != null)
             {
                 var claims = new List<Claim>()
                 {
                     new(ClaimTypes.Name, usuario.Nome),
                     new(ClaimTypes.Email, usuario.Email),
-                    new("UsuarioId", usuario.Id.ToString()),
-                    
+                    new("UsuarioId", usuario.Id.ToString()),                   
                 };
 
                 if (usuario.Perfil == "User")
@@ -63,6 +62,12 @@ namespace Blogger.Repositories
         {
             var emailJaExiste = await _usuarioContext.Usuario.AnyAsync(x => x.Email == email );
             return emailJaExiste;
+        }
+        public async Task<Usuario> ObterUsuario(int id)
+        {
+            var usuario =  _usuarioContext.Usuario.FirstOrDefault(x => x.Id == id);
+
+            return usuario;
         }
 
     }

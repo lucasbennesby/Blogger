@@ -20,12 +20,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
         options.LoginPath = "/Account/Login";
         options.LogoutPath = "/Account/LogOut";
+        options.AccessDeniedPath = "/Admin/Denied";
     } );
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Usuario Padrao", policy => policy.RequireRole("User"))
     .AddPolicy("Usuario Pro", policy => policy.RequireRole("UserPro"))
     .AddPolicy("ADM", policy => policy.RequireRole("ADM"));
+
+//builder.Services.AddSession(options =>
+//{
+//    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de expiração
+//    options.Cookie.HttpOnly = true; // Segurança: apenas HTTP
+//    options.Cookie.IsEssential = true; // Necessário para trabalhar mesmo sem consentimento de cookies
+//});
 
 builder.Services.AddHttpContextAccessor();
 
@@ -44,11 +52,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

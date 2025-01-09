@@ -1,6 +1,8 @@
 ﻿@using Blogger.Models.ViewModels
 @model CadastrarPublicacaoViewModel
 
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <form id="form" asp-action="Cadastrar" method="post" enctype="multipart/form-data">
     <div>
@@ -20,8 +22,10 @@
         <label for="subTitulo">SubTitulo: </label>
         <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
     </div>
-    <div id="editor" required></div>
-    <input type="hidden" id="Conteudo" asp-for="Conteudo" />
+   <div>
+       <input type="hidden" id="Conteudo" asp-for="Conteudo" />
+       <div id="editor"></div>
+   </div>
 
     <button id="submit" type="submit">Criar</button>
 </form>
@@ -35,17 +39,12 @@
         placeholder: 'Escreva seu conteúdo...',
         theme: 'snow'
     };
-    const quill = new Quill('#editor', options);
-    const conteudo = document.querySelector("#Conteudo");
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (event) => {
-        // Captura o conteúdo do Quill
-        const quillContent = quill.getContents(); // Delta (estrutura JSON do Quill)
-        console.log(quillContent);
-        conteudo.value = JSON.stringify(quillContent); // Serializa e atribui ao campo oculto
-        console.log(conteudo.value);
-
-    });   
+    const quill = new Quill('#editor', options); 
+    const submit = document.querySelector("#submit");
+    submit.addEventListener("click",()=>{
+        console.log("submitando");
+        document.querySelector("#Conteudo").value = quill.root.innerHTML;
+    })   
 </script>
 
 

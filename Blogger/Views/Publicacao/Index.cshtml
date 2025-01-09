@@ -3,12 +3,18 @@
 
 
 <link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
+@{
+    var usuarioAutenticado = ViewBag.UsuarioLogado;
+    var userId = ViewBag.UsuarioId;
+}
 
-
-<div class="container d-flex row ">
-    <div class="d-block ">
-        <a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
-    </div>
+<div class="container d-flex row homeContent">
+    @if (usuarioAutenticado)
+    {
+        <div class="d-block ">
+            <a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
+        </div>
+    }
 
     @if (Model.Count() > 0)
     {
@@ -29,8 +35,11 @@
                 </div>
                 <div class="card-footer text-center ">
                     <a class="btn btn-success" asp-action="Detalhes" asp-route-id="@p.Id">Visualizar</a>
-                    <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>                
-                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="GuardarIdPublicacao(@p.Id)">Deletar</a>
+                    @if (usuarioAutenticado && userId == p.UsuarioId.ToString())
+                    {
+                        <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>
+                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="GuardarIdPublicacao(@p.Id)">Deletar</a>
+                    }
                 </div>
                 <span class="px-2">
                     @p.Data
@@ -92,7 +101,7 @@
         publicacaoId = id;
     }
 
-    function RecarregarPagina(){
+    function RecarregarPagina() {
         window.location.href = '/Publicacao/Index';
     }
 
@@ -108,11 +117,11 @@
 
         if (response.ok) {
             abrirModal();
-            
+
         } else {
             alert("ocorreu um erro")
         }
-    }                    
+    }
 </script>
 
 <script>
@@ -122,7 +131,7 @@
 
         if (type && message) {
             new Noty({
-                type: type.trim(), 
+                type: type.trim(),
                 text: message.trim(),
                 timeout: 3000,
                 progressBar: true,
