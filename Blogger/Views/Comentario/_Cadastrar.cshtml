@@ -4,11 +4,12 @@
 <div>
     <form asp-action="Criar" asp-controller="Comentario" method="post">
         <input hidden asp-for="PublicacaoId"/>
-        <h5>Escreva seu comentario</h5>
-        <label for="comentario">Comentario</label>
-        <input asp-for="Descricao" type="text" id="comentario" />
         <span asp-validation-for="Descricao" class="text-danger"></span>
-        <br />
-        <button type="submit">Comentar</button>
+        <div class="">       
+            <textarea maxlength="500" asp-for="Descricao" type="text" class="form-control" aria-label="With textarea" placeholder="Adicione um comentário..."></textarea>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-dark mt-2" type="submit">Comentar</button>
+            </div>
+        </div>      
     </form>
 </div>

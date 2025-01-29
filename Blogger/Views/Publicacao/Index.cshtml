@@ -7,44 +7,69 @@
     var usuarioAutenticado = ViewBag.UsuarioLogado;
     var userId = ViewBag.UsuarioId;
 }
-
-<div class="container d-flex row homeContent">
+<div class="row mx-2">
     @if (usuarioAutenticado)
     {
-        <div class="d-block ">
+        <div class="d-block">
             <a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
         </div>
-    }
+    } 
+</div>
 
+<div class="container d-flex homeContent flex-wrap mb-5">
+   
+    
     @if (Model.Count() > 0)
-    {
-
-
+    {        
         @foreach (var p in Model)
-        {
+        {                              
+            <a asp-action="Detalhes" asp-route-id="@p.Id">
+                <div class="card">
+                    <div class="data">Criada em <time>@p.Data.Value.ToString("dd/MM/yyyy")</time></div>
+                    <h2>@p.Titulo</h2>
+                    <div class="img-container">
+                        <img src="/imagens/@p.Imagem" class="img">
+                    </div>
+                    <div class="autor">
+                        <div class="img-container">
+                            <img  src="/imagens/@p.Imagem" class="img">
+                        </div>
+                        <div class="info">
+                            <span>Autor</span>
+                            @p.NomeAutor
+                        </div>
+                    </div>
+                     <div class="tags">
+                        <span href="#">Blog</span>
+                        <span href="#">Viagem</span>
+                        <span href="#">Aventura</span>
+                        <span href="#">Negócios</span>
+                    </div> 
+                </div>
+            </a>
 
-            <div class="card m-3 col-3 @p.Id ">
-                <div class="container d-flex">
-                    <img src="/imagens/@p.Imagem" style="width:150px;height:150px;" class="p-0" alt="...">
+            @* <div class="card">
+                <div class="data">Blog <time>@p.Data.Value.Date</time></div>
+                <h2>@p.Titulo</h2>
+                <div class="img-container">
+                    <img src="/imagens/@p.Imagem" class="img">
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-center">Tags referentes a publicação</li>
-                </ul>
-                <div class="card-body text-center">
-                    <h3 class="m-0 card-title fs-3">@p.Titulo</h3>
+                <div class="autor">
+                    <div class="img-container">
+                        <img src="/imagens/@p.Imagem" class="img">
+                    </div>
+                    <div class="info">
+                        <span>Autor</span>
+                        @p.NomeAutor
+                    </div>
                 </div>
-                <div class="card-footer text-center ">
-                    <a class="btn btn-success" asp-action="Detalhes" asp-route-id="@p.Id">Visualizar</a>
-                    @if (usuarioAutenticado && userId == p.UsuarioId.ToString())
-                    {
-                        <a class="btn btn-warning" asp-action="Editar" asp-route-id="@p.Id">Editar</a>
-                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="GuardarIdPublicacao(@p.Id)">Deletar</a>
-                    }
+                <div class="tags">
+                    <a href="#">Blog</a>
+                    <a href="#">Viagem</a>
+                    <a href="#">Aventura</a>
+                    <a href="#">Negócios</a>
                 </div>
-                <span class="px-2">
-                    @p.Data
-                </span>
-            </div>
+            </div> *@
         }
 
     }

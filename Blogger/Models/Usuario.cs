@@ -20,6 +20,8 @@ namespace Blogger.Models
 
         public List<Publicacao> Publicacoes { get; set; }
         public List<Comentario> Comentarios { get; set; }
+        public string ImagemDePerfil { get; set; }
+
 
     }
 }

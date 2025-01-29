@@ -17,6 +17,7 @@ namespace Blogger.Models
         public string SubtTitulo { get; set; }
         [Required]
         public string Conteudo { get; set; }
+
         public DateTime? Data { get; set; }
         [Required]
         [StringLength(50)]
@@ -31,6 +32,7 @@ namespace Blogger.Models
 
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }    
+        public string Tags { get; set; }
     }
     
 }

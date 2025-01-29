@@ -5,29 +5,33 @@
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <form id="form" asp-action="Cadastrar" method="post" enctype="multipart/form-data">
-    <div>
-        <label for="arquivoDeImagem">
-            <img id="imagem"  style="width:300px; height:170px;" />
+    <div class="text-center mb-3">
+        <label for="arquivoDeImagem" >
+            <img id="imagem" hidden style="width:300px; height:170px;" />
         </label>
     </div>
     <div>
-        <label>Imagem:</label>
-        <input required id="arquivoDeImagem" type="file" name="imagem" />
+        <input required id="arquivoDeImagem" class="form-control mb-1" type="file" name="imagem" />
     </div>
-    <div>
-        <label for="titulo">Título: </label>
-        <input asp-for="Titulo" id="titulo" type="text" required />
+    <div class="input-group mb-1">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Título</span>
+        <input asp-for="Titulo" id="titulo" class="form-control" type="text" required />
     </div>
-    <div>
-        <label for="subTitulo">SubTitulo: </label>
-        <input asp-for="SubtTitulo" id="subTitulo" type="text" required />
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Subtítulo</span>
+        <input asp-for="SubtTitulo" id="subTitulo" class="form-control" type="text" required />
     </div>
+    <h3 class="text-center">
+        Escreva seu texto abaixo:
+    </h3>
    <div>
        <input type="hidden" id="Conteudo" asp-for="Conteudo" />
        <div id="editor"></div>
    </div>
 
-    <button id="submit" type="submit">Criar</button>
+    <button class="btn btn-success mt-2 mb-5" id="submit" type="submit">Publicar
+
+    </button>
 </form>
 
 <script>
@@ -60,7 +64,30 @@
 
             leitor.addEventListener("load", function (e) {
                 const alvoDoLeitor = e.target;
-                const imagem = document.querySelector("#imagem");
+                const imagem = new Image();
+
+                imagem.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+
+                    // Defina as dimensões desejadas
+                    const largura = 238; // Largura desejada
+                    const altura = 132.91; // Altura desejada
+                    canvas.width = largura;
+                    canvas.height = altura;
+
+                    // Redimensiona a imagem no canvas
+                    ctx.drawImage(imagem, 0, 0, largura, altura);
+
+                    // Obtém a imagem redimensionada
+                    const imagemRedimensionada = canvas.toDataURL("image/jpeg");
+
+                    // Define a imagem redimensionada no elemento <img>
+                    const imgElement = document.querySelector("#imagem");
+                    imgElement.removeAttribute("hidden");
+                    imgElement.src = imagemRedimensionada;
+                };
+
                 imagem.src = alvoDoLeitor.result;
             });
 

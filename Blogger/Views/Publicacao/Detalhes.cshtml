@@ -19,37 +19,39 @@
             </div>
         </div>
         <div>
-            <span>
-                Autor: @Model.NomeAutor
-                | @Model.Data
+            <div class="p-2">
+                Escrito em @Model.Data.Value.ToString("dd/MM/yyyy") por @Model.NomeAutor
                 @if (Model.DataAtualizacao != DateTime.MinValue)
                 {
                     <span>Editado em: @Model.DataAtualizacao</span>
                 }
-            </span>
-            <br />
-            <br />
+            </div>
             <hr />
-
+            <h2 class="text-center">Comentários</h2>
             @if (usuarioAutenticado)
             {
                 <partial name="~/Views/Comentario/_Cadastrar.cshtml" model="comentarioVM" />
+            }else{
+                <p class="text-warning text-center px-2">Entre ou Cadastre-se para comentar!</p>
             }
-            <div>
-                <br />
-                <br />
-                <h2>Comentarios:</h2>
+            <div class="mb-5">
+                <br />          
                 @if (Model.Comentarios.Count > 0 && Model.Comentarios != null)
                 {
                     @foreach (var c in Model.Comentarios)
                     {
-                        <div class="border p-3">
-                            <h5>@c.Autor</h5>
-                            <p>@c.Descricao</p>
-                            <span>
-                                @c.Data
-                            </span>
-                        </div>
+                        <div>
+                            <div class="border rounded p-4 pb-0 mb-2">
+                                <div class="d-flex">
+                                    <div class="placeholder rounded me-3" style="width: 4rem; height: 4rem;"></div>
+                                    <h4 class="ms-3">@c.Autor</h4>
+                                </div>
+                                <div class="ms-5">
+                                    <p class="ps-5 mb-0 text-break">@c.Descricao</p>
+                                </div>
+                                <span class="text-secondary mt-4 d-flex justify-content-end fs-6">@c.Data</span>
+                            </div>                      
+                        </div> 
                     }
                 }
                 else
