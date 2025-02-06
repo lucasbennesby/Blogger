@@ -1,11 +1,14 @@
 ﻿@using Blogger.Models.ViewModels
+@using System.Security.Claims
 @model Publicacao
 @{
     var comentarioVM = new CadastrarComentarioViewModel { PublicacaoId = Model.Id };
     var usuarioAutenticado = ViewBag.UsuarioLogado;
+    var userId = ViewBag.UsuarioId;
 }
 
-<div class="container row">
+
+<div id="detalhesPubli" class="container row">
     <div class="col"></div>
     <div class="col-10 fs-5" style="text-align:justify;text-justify:inter-word;">
         <div>
@@ -64,5 +67,83 @@
         </div>
     </div>
     <div class="col"></div>
+    <div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Exclusão?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Deseja mesmo excluir essa publicação? A operação é permanente.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmarExclusao()">Deletar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="successModal">Confirmação de exclusão</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Deletado com sucesso
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="RecarregarPagina()" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (userId != null)
+    {        
+        @if (Model.UsuarioId == int.Parse(userId))
+        {
+            <div class="d-grid gap-2 mb-3">
+                <a class="btn btn-warning" asp-action="Editar" asp-route-id="@Model.Id">Editar</a>
+                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="GuardarIdPublicacao(@Model.Id)">Deletar</a>
+            </div>
+        }
+    }
 </div>
 
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+<script>
+
+    let publicacaoId = null;
+
+    function GuardarIdPublicacao(id) {
+        publicacaoId = id;
+    }
+
+    function RecarregarPagina() {
+        window.location.href = '/Publicacao/Index';
+    }
+
+    function abrirModal() {
+        var modalElement = document.getElementById('successModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show(); // Chama a modal
+    }
+
+    async function confirmarExclusao() {
+        let id = publicacaoId;
+        let response = await fetch(`/Publicacao/Deletar?id=${id}`);
+
+        if (response.ok) {
+            abrirModal();
+
+        } else {
+            alert("ocorreu um erro")
+        }
+    }
+</script>

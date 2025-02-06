@@ -5,6 +5,8 @@ const checkbox = document.getElementById('customCheckbox');
 const path = document.getElementById('svgPath')
 
 
+
+
 document.getElementById('visualizarSenha').addEventListener('click', function () {
     console.log("click")
     checkbox.checked = !checkbox.checked; 

@@ -1,17 +1,9 @@
 ﻿@using System.Security.Claims
-@* <span class="d-block fs-6">Role: @Context.User.FindFirst(ClaimTypes.Role).Value</span> *@
 
 @if (Context.User.Identity!.Name != null)
 {
-
     <form class="navbar-right " asp-controller="Account" asp-action="LogOut" method="post">
         <ul class="nav navbar-nav navbar-right">
-            @if (Context.User.FindFirst(ClaimTypes.Role).Value == "ADM")
-            {
-                <li class="nav-link">
-                    <a class="nav-link border rounded" asp-controller="Admin" asp-action="AdminPage">Gerenciar Usuarios</a>
-                </li>
-            }
             <li class="nav-link d-flex align-items-center">Olá, @Context.User.Identity.Name</li>
             <button class="btn btn-outline-dark my-2" type="submit">Sair</button>
         </ul>
@@ -21,15 +13,13 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+            <a class="nav-link text-dark" id="log" asp-controller="Account" asp-action="Login">Login</a>
         </li>
         <li>
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Cadastrar">Cadastrar</a>
+            <a class="nav-link text-dark" id="cad" asp-controller="Account" asp-action="Cadastrar">Cadastrar</a>
         </li>
-
     </ul>
 }
-
 
 
 

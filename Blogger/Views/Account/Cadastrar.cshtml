@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/Cadastrar.css" />
 
-<div id="card">
+<div class="cardAlt" id="cardForm">
     <div id="card-content">
         <div id="card-title">
             <h2>CADASTRO</h2>
@@ -16,7 +16,6 @@
             <span asp-validation-for="Senha" class="text-danger" style="font-size:13px; text-align:center;"></span>
             <span asp-validation-for="ConfirmarSenha" class="text-danger" style="font-size:13px; text-align:center;"></span>
             <span asp-validation-for="Perfil" class="text-danger" style="font-size:13px; text-align:center;"></span>
-
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -36,9 +35,9 @@
             <label>
                 <input asp-for="Senha" id="user-password" class="form-content" type="password" />
                 <input type="checkbox" id="customCheckbox" hidden>
-                    <svg id="visualizarSenha" style="width:24px;height:24px;transition: transform 0.3s, opacity 0.3s;cursor:pointer;" viewBox="0 0 24 24">
-                        <path id="svgPath" fill="#000000" d="M12 17.5C8.2 17.5 4.8 15.4 3.2 12H1C2.7 16.4 7 19.5 12 19.5S21.3 16.4 23 12H20.8C19.2 15.4 15.8 17.5 12 17.5Z" /> <!-- account -->
-                    </svg>
+                <svg id="visualizarSenha" style="width:24px;height:24px;transition: transform 0.3s, opacity 0.3s;cursor:pointer;" viewBox="0 0 24 24">
+                    <path id="svgPath" fill="#000000" d="M12 17.5C8.2 17.5 4.8 15.4 3.2 12H1C2.7 16.4 7 19.5 12 19.5S21.3 16.4 23 12H20.8C19.2 15.4 15.8 17.5 12 17.5Z" /> <!-- account -->
+                </svg>
             </label>
             <div class="form-border"></div>
             <label asp-for="Senha" style="padding-top:22px">
@@ -49,11 +48,11 @@
             <label asp-for="Perfil" style="padding-top:22px">
                 &nbsp;Tipo de perfil
             </label>
-                <select asp-for="Perfil" class="form-control">
-                    <option selected disabled>Selecione...</option>
-                    <option value="User">Comentador</option>
-                    <option value="UserPro">Publicador + Comentador</option>
-                </select>
+            <select asp-for="Perfil" class="form-control">
+                <option selected disabled>Selecione...</option>
+                <option value="User">Comentador</option>
+                <option value="UserPro">Publicador + Comentador</option>
+            </select>
             <input id="submit-btn" value="Cadastrar" type="submit" name="submit" />
             <a id="signup" asp-action="Login">Já tem uma conta?</a>
         </form>
@@ -61,9 +60,12 @@
 </div>
 
 <script src="~/js/mostrarSenha.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
 }
-    

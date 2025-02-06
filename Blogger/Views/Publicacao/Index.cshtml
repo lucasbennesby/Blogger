@@ -1,24 +1,22 @@
 ﻿@using Blogger.Models
+@using System.Security.Claims
 @model IEnumerable<Publicacao>
 
-
-<link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
 @{
     var usuarioAutenticado = ViewBag.UsuarioLogado;
     var userId = ViewBag.UsuarioId;
 }
-<div class="row mx-2">
+<link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
+
+<div class="row ms-1">
     @if (usuarioAutenticado)
     {
-        <div class="d-block">
-            <a class="mb-3 btn btn-success" asp-action="Cadastrar">Criar publicação</a>
+        <div class="d-flex">
+            <a class="me-2 btn btn-success" asp-controller="Publicacao" asp-action="Cadastrar">Criar publicação</a>         
         </div>
-    } 
+    }
 </div>
-
-<div class="container d-flex homeContent flex-wrap mb-5">
-   
-    
+<div class="container d-flex homeContent flex-wrap mb-5"> 
     @if (Model.Count() > 0)
     {        
         @foreach (var p in Model)
@@ -47,75 +45,12 @@
                     </div> 
                 </div>
             </a>
-
-            @* <div class="card">
-                <div class="data">Blog <time>@p.Data.Value.Date</time></div>
-                <h2>@p.Titulo</h2>
-                <div class="img-container">
-                    <img src="/imagens/@p.Imagem" class="img">
-                </div>
-                <div class="autor">
-                    <div class="img-container">
-                        <img src="/imagens/@p.Imagem" class="img">
-                    </div>
-                    <div class="info">
-                        <span>Autor</span>
-                        @p.NomeAutor
-                    </div>
-                </div>
-                <div class="tags">
-                    <a href="#">Blog</a>
-                    <a href="#">Viagem</a>
-                    <a href="#">Aventura</a>
-                    <a href="#">Negócios</a>
-                </div>
-            </div> *@
         }
-
     }
     else
     {
         <h1>Não existem publicações!</h1>
     }
-
-    <div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Exclusão?</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Deseja mesmo excluir essa publicação? A operação é permanente.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmarExclusao()">Deletar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="successModal">Confirmação de exclusão</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Deletado com sucesso
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="RecarregarPagina()" data-bs-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 
 <script>

@@ -34,6 +34,7 @@ namespace Blogger.Repositories
             publicacao.Imagem = caminhoDaImagem;
             publicacao.UsuarioId = int.Parse(_usuarioService.FindFirst("UsuarioId").Value);
             publicacao.NomeAutor = _usuarioService.FindFirst(ClaimTypes.Name).Value;
+            publicacao.Tags = "mock tag";
 
             _contextoBlogger.Add(publicacao);
             await _contextoBlogger.SaveChangesAsync();

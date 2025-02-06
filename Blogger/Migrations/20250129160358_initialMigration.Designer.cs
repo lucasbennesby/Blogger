@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogger.Migrations
 {
     [DbContext(typeof(ContextoBlogger))]
-    [Migration("20250127172017_tagsEFotoDePerfil")]
-    partial class tagsEFotoDePerfil
+    [Migration("20250129160358_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

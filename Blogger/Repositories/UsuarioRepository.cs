@@ -52,6 +52,7 @@ namespace Blogger.Repositories
             usuario.Email = usuarioVM.Email;
             usuario.Senha = usuarioVM.Senha;
             usuario.Perfil = usuarioVM.Perfil;
+            usuario.ImagemDePerfil = "provisorio";
 
             _usuarioContext.Add(usuario);
             await _usuarioContext.SaveChangesAsync();

@@ -1,5 +1,7 @@
-html {
-  font-size: 14px;
+html, body {
+    font-size: 14px;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 @media (min-width: 768px) {

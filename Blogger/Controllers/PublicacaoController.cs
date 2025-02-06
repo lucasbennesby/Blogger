@@ -26,7 +26,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADM, Usuario Pro")]
+        [Authorize(Roles = "ADM,UserPro")]
         public IActionResult Cadastrar()
         {
             return View();
@@ -72,6 +72,8 @@ namespace Blogger.Controllers
 
         public async Task<IActionResult> Detalhes(int id)
         {
+            ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
+            ViewBag.UsuarioId = HttpContext.User.FindFirstValue("UsuarioId");
             var publicacao = await _publicacaoRepository.BuscarPorId(id);
 
             ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;

@@ -21,7 +21,7 @@ label {
     text-align: right;
 }
 
-#card {
+.cardAlt {
     background: #fbfbfb;
     border-radius: 8px;
     box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
