@@ -1,0 +1,155 @@
+﻿@using Blogger.Models
+@using System.Security.Claims
+@model IEnumerable<Publicacao>
+
+@{
+    var usuarioAutenticado = ViewBag.UsuarioLogado;
+    var userId = ViewBag.UsuarioId;
+}
+<link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
+
+<div class="row ms-1">
+    @if (usuarioAutenticado)
+    {
+        <div class="d-flex">
+            <a class="me-2 btn btn-success" asp-controller="Publicacao" asp-action="Cadastrar">Criar publicação</a>
+        </div>
+    }
+</div>
+<div class="">
+    @if (Model.Count() > 0)
+    {
+        @foreach (var p in Model)
+        {
+            <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">
+                <hr />
+                <div class="container my-4">         
+                    <div class="">
+                        <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
+                        <div class="d-flex">
+                            <!-- Foto de perfil -->
+                            <div class="me-3">
+                                <img src="/imagens/@p.Imagem" width="40" height="40" alt="Foto de Perfil" class="rounded-circle position-absolute">
+                            </div>
+                            <!-- Conteúdo do post -->
+                            <div>
+                                <div class="ms-5">
+                                    <strong>@p.NomeAutor</strong> <span class="text-muted">@p.NomeAutor · @p.HoraAteAgora(@p.Data)</span>
+                                </div>
+                                <div class="mb-1 ms-5">
+                                    @Html.Raw(@p.Conteudo)
+                                </div>
+                                <!-- Botões de ações -->
+                                <div class="d-flex  mt-3">
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-chat"></i> 
+                                    </a>
+                                    <a href="#" class="ms-5">
+                                        <i class="bi bi-arrow-repeat"></i> 
+                                    </a>
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-heart"></i> 
+                                    </a>
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-share"></i> 
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </a>
+            <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">                
+                <div class="container my-4">
+                    <div class="">
+                        <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
+                        <div class="d-flex">
+                            <!-- Foto de perfil -->
+                            <div class="me-3">
+                                <img src="/imagens/@p.Imagem" width="40" height="40" alt="Foto de Perfil" class="rounded-circle position-absolute">
+                            </div>
+                            <!-- Conteúdo do post -->
+                            <div>
+                                <div class="ms-5">
+                                    <strong>@p.NomeAutor</strong> <span class="text-muted">@p.NomeAutor · @p.HoraAteAgora(@p.Data)</span>
+                                </div>
+                                <div class="mb-1 ms-5">
+                                    @Html.Raw(@p.Conteudo)
+                                </div>
+                                <!-- Botões de ações -->
+                                <div class="d-flex  mt-3">
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-chat"></i>
+                                    </a>
+                                    <a href="#" class="ms-5">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </a>
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-heart"></i>
+                                    </a>
+                                    <a href="#" class="ms-5 ">
+                                        <i class="bi bi-share"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </a>
+        }
+    }
+    else
+    {
+        <h1>Não existem publicações!</h1>
+    }
+</div>
+
+<script>
+
+    let publicacaoId = null;
+
+    function GuardarIdPublicacao(id) {
+        publicacaoId = id;
+    }
+
+    function RecarregarPagina() {
+        window.location.href = '/Publicacao/Index';
+    }
+
+    function abrirModal() {
+        var modalElement = document.getElementById('successModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show(); // Chama a modal
+    }
+
+    async function confirmarExclusao() {
+        let id = publicacaoId;
+        let response = await fetch(`/Publicacao/Deletar?id=${id}`);
+
+        if (response.ok) {
+            abrirModal();
+
+        } else {
+            alert("ocorreu um erro")
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var type = '@TempData["NotificationType"]';
+        var message = '@TempData["NotificationMessage"]';
+
+        if (type && message) {
+            new Noty({
+                type: type.trim(),
+                text: message.trim(),
+                timeout: 3000,
+                progressBar: true,
+                layout: 'topLeft'
+            }).show();
+        }
+    });
+</script>
