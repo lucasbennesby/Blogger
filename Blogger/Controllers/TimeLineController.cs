@@ -7,10 +7,12 @@ namespace Blogger.Controllers
     public class TimeLineController : Controller
     {
         private readonly IPublicacaoRepository _publicacaoRepository;
+        private readonly ILikesRepository _likeRepository;
 
-        public TimeLineController(IPublicacaoRepository publicacao)
+        public TimeLineController(IPublicacaoRepository publicacao, ILikesRepository likeRepository)
         {
             _publicacaoRepository = publicacao;
+            _likeRepository = likeRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -20,5 +22,13 @@ namespace Blogger.Controllers
             ViewBag.UsuarioId = HttpContext.User.FindFirstValue("UsuarioId");
             return View(lista);
         }
+
+        public async Task<IActionResult> LikeTimeLine(int idUsuario,int idPublicacao)
+        {
+            await _publicacaoRepository.Like(idUsuario, idPublicacao);
+
+            return RedirectToAction("Index", "TimeLine");
+        }
     }
 }
+

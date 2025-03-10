@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Minha Página Vue";
+}
+
+<div id="app">
+    <h2>{{ mensagem }}</h2>
+    <button v-on:click="alterarMensagem()">Clique Aqui</button>
+
+    <h2>{{ teste }}</h2>
+    <button v-on:click="alterarTeste()">Clique Aqui</button>
+</div>
+
+@section Scripts {
+  
+    <script src="~/js/Vue.js"></script>
+}
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>

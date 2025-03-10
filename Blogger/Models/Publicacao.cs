@@ -11,14 +11,15 @@ namespace Blogger.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(50)]
         public string Titulo { get; set; }
+
         [StringLength(100)]
         public string SubtTitulo { get; set; }
         [Required]
         public string Conteudo { get; set; }
-
         public DateTime? Data { get; set; }
         [Required]
         [StringLength(50)]
@@ -26,15 +27,13 @@ namespace Blogger.Models
         [MaybeNull]
         public DateTime DataAtualizacao { get; set; }
         public string Imagem { get; set; }
-
         public List<Comentario> Comentarios { get; set; }
 
         [ForeignKey("UsuarioId")]
-
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         public string Tags { get; set; }
-
+        public List<Likes> Likes { get; set; } = new List<Likes>();
         public string HoraAteAgora(DateTime? data)
         {
             DateTime dataAtual = DateTime.Now;
@@ -47,18 +46,22 @@ namespace Blogger.Models
 
             if (diferencaDeTempoMinutos > 60)
             {
-                int result = (int)diferenca.TotalHours;
-                sResult = result.ToString() + "h";
-            }
-            else if(diferencaDeTempoHoras > 24)
-            {
-                int result = (int)diferenca.TotalDays;
-                sResult = result.ToString() + "d";
+                if (diferencaDeTempoHoras > 24)
+                {
+                    int resultDays = (int)diferenca.TotalDays;
+                    sResult = resultDays.ToString() + "d";
+                }
+                else
+                {
+
+                    int resultHours = (int)diferenca.TotalHours;
+                    sResult = resultHours.ToString() + "h";
+
+                }
             }
 
-            return sResult.ToString();
-                      
+            return sResult.ToString();                 
         }
     }
-    
+        
 }

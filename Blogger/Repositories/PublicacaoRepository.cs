@@ -4,6 +4,7 @@ using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 
 
@@ -14,12 +15,14 @@ namespace Blogger.Repositories
         private readonly ContextoBlogger _contextoBlogger;
         private readonly string _sistema;
         private readonly ClaimsPrincipal _usuarioService;
+        private readonly ILikesRepository _Likes;
 
-        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema, IHttpContextAccessor httpContextAccessor)
+        public PublicacaoRepository(ContextoBlogger context, IWebHostEnvironment sistema, IHttpContextAccessor httpContextAccessor, ILikesRepository likes)
         {
             _contextoBlogger = context;
             _sistema = sistema.WebRootPath;
             _usuarioService = httpContextAccessor.HttpContext.User;
+            _Likes = likes;
         }
         public async Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM, IFormFile imagem)
         {
@@ -63,7 +66,9 @@ namespace Blogger.Repositories
 
         public async Task<List<Publicacao>> Listar()
         {
-            var lista = await _contextoBlogger.Publicacao.ToListAsync();
+            var lista = await _contextoBlogger.Publicacao
+                .Include(p => p.Likes)
+                .ToListAsync();
 
             return lista;
         }
@@ -107,6 +112,16 @@ namespace Blogger.Repositories
             _contextoBlogger.Publicacao.Remove(publicacao);
             await _contextoBlogger.SaveChangesAsync();
 
+        }
+
+        public async Task Like(int idPublicacao, int idUsuario)
+        {
+            var deuLike = await _Likes.VerificarSeLikeExiste(idUsuario, idPublicacao);
+
+            if (!deuLike)
+                await _Likes.AdicionarLike(idUsuario, idPublicacao);
+            else
+                _Likes.RemoverLike(idUsuario, idPublicacao);
         }
     }
 }

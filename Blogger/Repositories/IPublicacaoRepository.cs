@@ -14,5 +14,6 @@ namespace Blogger.Repositories
 
         Task Deletar(int id);
 
+        Task Like(int idUsuario, int idPublicacao);
     }
 }
