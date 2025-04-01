@@ -17,58 +17,12 @@
         </div>
     }
 </div>
-<div class="">
+<div id="app">
     @if (Model.Count() > 0)
     {
         @foreach (var p in Model)
         {
             <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">
-                <div class="container my-4">         
-                    <div class="">
-                        <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
-                        <div class="d-flex">
-                            <!-- Foto de perfil -->
-                            <div class="me-3">
-                                <img src="/imagens/@p.Imagem" width="40" height="40" alt="Foto de Perfil" class="rounded-circle position-absolute">
-                            </div>
-                            <!-- Conteúdo do post -->
-                            <div>
-                                <div class="ms-5">
-                                    <strong>@p.NomeAutor</strong> <span class="text-muted">@p.NomeAutor · @p.HoraAteAgora(@p.Data)</span>
-                                </div>
-                                <div class="mb-1 ms-5">
-                                    @Html.Raw(@p.Conteudo)
-                                </div>
-                                <!-- Botões de ações -->
-                                <div class="d-flex  mt-3">
-                                    <a href="#" class="ms-5 ">
-                                        <i class="bi bi-chat"></i> 
-                                    </a>
-                                    <form asp-action="LikeTimeLine" asp-controller="TimeLine" method="post">
-                                        <input hidden value="@p.Id" name="idUsuario" />
-                                        <input hidden value="@userId" name="idPublicacao" />
-                                        <button type="submit" class="ms-5" style="border:none; background-color:transparent;color:blue;">
-                                        @if (p.Likes.Exists(l => l.UsuarioId.ToString() == userId))
-                                        {
-                                                <i class="bi bi-star-fill"></i>
-                                        }
-                                        else
-                                        {                                       
-                                                <i class="bi bi-star"></i>   
-                                        }
-                                        </button>
-                                    </form>
-                                    <a href="#" class="ms-5 ">
-                                        <i class="bi bi-share"></i> 
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-            </a>
-           @*  <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">                
                 <div class="container my-4">
                     <div class="">
                         <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
@@ -90,12 +44,14 @@
                                     <a href="#" class="ms-5 ">
                                         <i class="bi bi-chat"></i>
                                     </a>
-                                    <a href="#" class="ms-5">
-                                        <i class="bi bi-arrow-repeat"></i>
-                                    </a>
-                                    <a href="#" class="ms-5 ">
-                                        <i class="bi bi-heart"></i>
-                                    </a>
+
+                                    <input hidden value="@p.Id" name="idUsuario" />
+                                    <input hidden value="@userId" name="idPublicacao" />
+                                    <button v-on:click="darLike(@p.Id)" class="ms-5" style="border:none; background-color:transparent;color:blue;">
+                                        <i id="star-@p.Id" :class="isLiked(@p.Id) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+
+                                        <span id="likeCounter-@p.Id">@p.ContadorDeLikes()</span>
+                                    </button>
                                     <a href="#" class="ms-5 ">
                                         <i class="bi bi-share"></i>
                                     </a>
@@ -105,7 +61,7 @@
                     </div>
                 </div>
                 <hr />
-            </a> *@
+            </a>
         }
     }
     else
@@ -113,6 +69,62 @@
         <h1>Não existem publicações!</h1>
     }
 </div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+        const app = Vue.createApp({
+        data() {
+            return {
+                publicacoes: @Html.Raw(Json.Serialize(Model)),
+                usuarioId: '@userId'
+            }
+        },
+        mounted() {
+
+        },
+        methods: {
+            async darLike(publicacaoId) {
+
+                const response = await fetch(`/TimeLine/LikeTimeLine`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                                    body: JSON.stringify({ PublicacaoIdVM : publicacaoId, UsuarioIdVM: this.usuarioId })
+                })
+
+                    this.toggleStar(publicacaoId)
+
+            },
+            isLiked(publicacaoId) {
+                let post = this.publicacoes.find(p => p.id == publicacaoId);
+                return post.likes.some(like => like.usuarioId == this.usuarioId)
+            },
+                 toggleStar(id) {
+            
+            let star = document.getElementById('star-'+id);
+
+            let counter = document.getElementById('likeCounter-'+id); // ID do contador
+
+
+                 if (star.classList.contains('bi-star-fill')) {
+
+                       star.classList.replace('bi-star-fill', 'bi-star');
+                       counter.textContent = parseInt(counter.textContent, 10) - 1;
+
+                 } else {
+
+                       star.classList.replace('bi-star', 'bi-star-fill');
+                       counter.textContent = parseInt(counter.textContent, 10) + 1;
+                 }
+        }
+
+        }
+    })
+
+    app.mount('#app');
+</script>
+
 
 <script>
 

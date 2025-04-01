@@ -62,6 +62,12 @@ namespace Blogger.Models
 
             return sResult.ToString();                 
         }
+        public int ContadorDeLikes()
+        {         
+            int quantidadeDeLikes = Likes.Count > 0 ? Likes.Count :  0;
+
+            return quantidadeDeLikes;
+        }
     }
         
 }

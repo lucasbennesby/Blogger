@@ -2,6 +2,7 @@
 using Blogger.Contexto;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -114,7 +115,7 @@ namespace Blogger.Repositories
 
         }
 
-        public async Task Like(int idPublicacao, int idUsuario)
+        public async Task Like( int idUsuario, int idPublicacao)
         {
             var deuLike = await _Likes.VerificarSeLikeExiste(idUsuario, idPublicacao);
 

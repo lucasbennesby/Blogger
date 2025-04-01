@@ -1,4 +1,7 @@
-﻿using Blogger.Repositories;
+﻿using Blogger.Models;
+using Blogger.Models.ViewModels;
+using Blogger.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -23,11 +26,18 @@ namespace Blogger.Controllers
             return View(lista);
         }
 
-        public async Task<IActionResult> LikeTimeLine(int idUsuario,int idPublicacao)
+        [Authorize(Roles = "ADM,UserPro,User")]
+        [HttpPost]
+        public async Task<IActionResult> LikeTimeLine([FromBody] TimeLineViewModel timeLine)
         {
-            await _publicacaoRepository.Like(idUsuario, idPublicacao);
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                //return RedirectToAction("Cadastrar", "Account");
+                return Json(new { success = false });
+            }
+            await _publicacaoRepository.Like(timeLine.UsuarioIdVM, timeLine.PublicacaoIdVM);
 
-            return RedirectToAction("Index", "TimeLine");
+            return Json(new { success = true });
         }
     }
 }

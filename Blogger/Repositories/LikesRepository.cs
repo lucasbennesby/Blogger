@@ -27,7 +27,15 @@ namespace Blogger.Repositories
                 UsuarioId = idUsuario,
             });
 
-            await _contextoBlogger.SaveChangesAsync();
+            try
+            {
+                await _contextoBlogger.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
 
         public void RemoverLike(int idUsuario, int idPublicacao)
