@@ -66,7 +66,7 @@ namespace Blogger.Repositories
         }
         public async Task<Usuario> ObterUsuario(int id)
         {
-            var usuario =  _usuarioContext.Usuario.FirstOrDefault(x => x.Id == id);
+            var usuario =  await _usuarioContext.Usuario.FirstOrDefaultAsync(x => x.Id == id);
 
             return usuario;
         }

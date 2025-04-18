@@ -137,3 +137,38 @@ particle {
     pointer-events: none;
     opacity: 0;
 }
+
+:root {
+    --primary-color: #1DA1F2;
+    --background-color: #FFFFFF;
+    --text-color: #14171A;
+    --secondary-text-color: #657786;
+    --border-color: #E1E8ED;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.like-star {
+    color: var(--primary-color);
+}
+
+.bi-star-fill {
+    color: var(--primary-color);
+}
+
+.nav-link:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+    border-radius: 30px;
+}

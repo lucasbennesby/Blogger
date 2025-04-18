@@ -5,68 +5,154 @@
 @{
     var usuarioAutenticado = ViewBag.UsuarioLogado;
     var userId = ViewBag.UsuarioId;
+    var user = ViewBag.User;
 }
 
 <link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
 
-<div class="row ms-1">
-    @if (usuarioAutenticado)
-    {
-        <div class="d-flex">
-            <a class="me-2 btn btn-success" asp-controller="Publicacao" asp-action="Cadastrar">Criar publicação</a>
+<div class="mx-5" id="app">
+    <div class="row ">
+        <!--TOGGLE CANVA MOBILE ONLY-->
+        <a class="pb-2 d-block d-sm-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas" style="width:fit-content">
+            <img src="https://placehold.co/48" class="rounded" />
+        </a>
+        <!--LEFT SIDE BAR-->
+        <div class="border-end col-lg-2 col-md-3  col-sm-1 d-none d-sm-block">
+            <div class="d-flex flex-column h-100 p-3">
+                <h1 class="h4 mb-4 fw-bold text-primary ps-2">Blogger</h1>
+                <div class="nav flex-column">
+                    <a href="#" class="nav-link mb-3 fw-bold d-flex align-items-center ps-2">
+                        <i class="bi bi-house-door me-3"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-hash me-3"></i>
+                        <span>Explore</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-bell me-3"></i>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-envelope me-3"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-bookmark me-3"></i>
+                        <span>Bookmarks</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-person me-3"></i>
+                        <span>Profile</span>
+                    </a>
+                </div>
+                @if (usuarioAutenticado)
+                {
+                    <a class="btn btn-primary rounded-pill w-100 mt-3" asp-controller="Publicacao" asp-action="Cadastrar">Tweet</a>
+                }
+            </div>
         </div>
-    }
-</div>
-<div id="app">
-    @if (Model.Count() > 0)
-    {
-        @foreach (var p in Model)
-        {
-            <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">
-                <div class="container my-4">
-                    <div class="">
-                        <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
-                        <div class="d-flex">
-                            <!-- Foto de perfil -->
-                            <div class="me-3">
-                                <img src="/imagens/@p.Imagem" width="40" height="40" alt="Foto de Perfil" class="rounded-circle position-absolute">
-                            </div>
-                            <!-- Conteúdo do post -->
-                            <div>
-                                <div class="ms-5">
-                                    <strong>@p.NomeAutor</strong> <span class="text-muted">@p.NomeAutor · @p.HoraAteAgora(@p.Data)</span>
-                                </div>
-                                <div class="mb-1 ms-5">
-                                    @Html.Raw(@p.Conteudo)
-                                </div>
-                                <!-- Botões de ações -->
-                                <div class="d-flex  mt-3">
-                                    <a href="#" class="ms-5 ">
-                                        <i class="bi bi-chat"></i>
-                                    </a>
+        <!--OFF CANVA MOBILE ONLY-->
+        <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" style="margin-left:-5rem;">
+            <div class=" offcanvas-header border-bottom" style="padding-left:7rem;">
+                @if (usuarioAutenticado)
+                {
+                    <div class="position-relative start-0">
+                        <img class="rounded mt-1 d-block" src="https://placehold.co/48" />
+                        <span class="fw-bold d-block">@Context.User.Identity.Name</span>
+                        <span class="position-absolute top-25" style="font-size:0.8rem; margin-top:-0.3rem">@@@Context.User.Identity.Name</span>
+                        <span class="d-block mt-3 fw-bold">287 <span class="fw-normal">Seguindo</span> 356 <span class="fw-normal">Seguidores</span></span>
+                    </div>
+                }
+                @* <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button> *@
+            </div>
+            <div class="offcanvas-body" style="padding-left:6rem;">
+                <div class="nav flex-column">
+                    <a href="#" class="nav-link mb-3 fw-bold d-flex align-items-center ps-2">
+                        <i class="bi bi-house-door me-3"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-hash me-3"></i>
+                        <span>Explore</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-bell me-3"></i>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-envelope me-3"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-bookmark me-3"></i>
+                        <span>Bookmarks</span>
+                    </a>
+                    <a href="#" class="nav-link mb-3 d-flex align-items-center ps-2">
+                        <i class="bi bi-person me-3"></i>
+                        <span>Profile</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--MIDDLE CONTENT-->
+        <div class="border-top col-lg-8 col-md-8  col-sm-6">
+            @if (Model.Count() > 0)
+            {
+                @foreach (var p in Model)
+                {
+                    <a asp-action="Detalhes" asp-controller="Publicacao" asp-route-id="@p.Id">
+                        <div class="my-4">
+                            <div class="">
+                                <!-- Linha principal: Foto de perfil ao lado do conteúdo -->
+                                <div class="d-flex">
+                                    <!-- Foto de perfil -->
+                                    <div class="me-3">
+                                        <img src="/imagens/@p.Imagem" width="40" height="40" alt="Foto de Perfil" class="rounded-circle position-absolute">
+                                    </div>
+                                    <!-- Conteúdo do post -->
+                                    <div>
+                                        <div class="ms-5">
+                                            <strong>@p.NomeAutor</strong> <span class="text-muted">  @@@p.NomeAutor · @p.HoraAteAgora(@p.Data)</span>
+                                        </div>
+                                        <div class="mb-1 ms-5">
+                                            @Html.Raw(@p.Conteudo)
+                                        </div>
+                                        <!-- Botões de ações -->
+                                        <div class="d-flex  mt-3">
+                                            <a href="#" class="ms-5 ">
+                                                <i class="bi bi-chat"></i>
+                                            </a>
 
-                                    <input hidden value="@p.Id" name="idUsuario" />
-                                    <input hidden value="@userId" name="idPublicacao" />
-                                    <button v-on:click="darLike(@p.Id,$event)" class="ms-5 like-star" style="border:none; background-color:transparent;color:#2683B9;">
-                                        <i id="star-@p.Id" :class="isLiked(@p.Id) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
-                                        <span class="like-number" id="likeCounter-@p.Id">@p.ContadorDeLikes()</span>
-                                    </button>
-                                    <div href="#" class="ms-5">
-                                        <i class="bi bi-share"></i>
+                                            <input hidden value="@p.Id" name="idUsuario" />
+                                            <input hidden value="@userId" name="idPublicacao" />
+                                            <button v-on:click="darLike(@p.Id,$event)" class="ms-5 like-star" style="border:none; background-color:transparent;color:#2683B9;">
+                                                <i id="star-@p.Id" :class="isLiked(@p.Id) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+                                                <span class="like-number" id="likeCounter-@p.Id">@p.ContadorDeLikes()</span>
+                                            </button>
+                                            <div href="#" class="ms-5">
+                                                <i class="bi bi-share"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <hr />
-            </a>
-        }
-    }
-    else
-    {
-        <h1>Não existem publicações!</h1>
-    }
+                        <hr />
+                    </a>
+                }
+            }
+            else
+            {
+                <h1>Não existem publicações!</h1>
+            }
+        
+        </div>
+        <!--RIGHT SIDE BAR-->
+        <div class="d-none d-sm-block border-start col-lg-2 col-md-1  col-sm-1">right side bar</div>
+    </div>
+    <div class="d-block d-sm-none bg-info p-3">Mobile</div>
+    <div class="d-none d-sm-block bg-success p-3">Desktop</div>
 </div>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
