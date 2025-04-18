@@ -21,5 +21,6 @@ namespace Blogger.Models
         public List<Comentario> Comentarios { get; set; }
         public List<Likes> likes { get; set; } = new List<Likes>();
         public string ImagemDePerfil { get; set; }
+
     }
 }

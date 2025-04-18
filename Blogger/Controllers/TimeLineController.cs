@@ -28,11 +28,16 @@ namespace Blogger.Controllers
             return View(lista);
         }
 
-        public async Task<IActionResult> Index1()
+        public async Task<IActionResult> PerfilDeUsuario(PerfilUsuarioViewModel perfilUsuarioViewModel)
         {
-            var lista = await _publicacaoRepository.Listar();
-            ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
-            ViewBag.UsuarioId = HttpContext.User.FindFirstValue("UsuarioId");
+            var usuarioLogado = ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
+            if (!usuarioLogado)
+            {
+                return RedirectToAction("Cadastrar", "Account");
+            }
+            var lista = await _publicacaoRepository.ListarPorUsuario(perfilUsuarioViewModel.usuarioId);
+            ViewBag.UsuarioId = perfilUsuarioViewModel.usuarioId;
+            ViewBag.Usuario = _usuarioRepository.ObterUsuario(perfilUsuarioViewModel.usuarioId);
             return View(lista);
         }
 
@@ -49,6 +54,7 @@ namespace Blogger.Controllers
 
             return Json(new { success = true });
         }
+
     }
 }
 

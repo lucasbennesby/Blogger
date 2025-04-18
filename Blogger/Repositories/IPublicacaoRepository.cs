@@ -7,6 +7,7 @@ namespace Blogger.Repositories
     {
         Task<Publicacao> Criar(CadastrarPublicacaoViewModel publicacaoVM, IFormFile imagem);
         Task<List<Publicacao>> Listar();
+        Task<List<Publicacao>> ListarPorUsuario(int usuarioId);
 
         Task<Publicacao> BuscarPorId(int id);
 

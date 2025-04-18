@@ -74,6 +74,16 @@ namespace Blogger.Repositories
             return lista;
         }
 
+        public async Task<List<Publicacao>> ListarPorUsuario(int usuarioId)
+        {
+            var lista = await _contextoBlogger.Publicacao
+                .Where(p => p.Usuario.Id == usuarioId)
+                .Include(p => p.Likes)
+                .ToListAsync();
+
+            return lista;
+        }
+
         public async Task<Publicacao> BuscarPorId(int id)
         {
             Publicacao publicacao = await _contextoBlogger.Publicacao
