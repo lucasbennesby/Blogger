@@ -5,7 +5,7 @@
 @{
     var usuarioAutenticado = ViewBag.UsuarioLogado;
     var userId = ViewBag.UsuarioId;
-    var user = ViewBag.User;
+    var nome = ViewBag.UserName;
 }
 
 <link rel="stylesheet" href="~/css/IndexPublicacao.css" asp-append-version="true" />
@@ -41,12 +41,12 @@
                 <img class="rounded-circle border border-1 border-dark" src="https://placehold.co/68" />
 
                 <div class="position-relative" style="top:3rem;">
-                    <button class="text-center btn btn-outline-dark rounded-pill h-150 px-3 fw-bold">Edit profile</button>
+                    <a asp-route-id="@userId" asp-action="Editar" asp-controller="Account" class="text-center btn btn-outline-dark rounded-pill h-150 px-3 fw-bold">Edit profile</a>
                 </div>
             </div>
 
             <h1 class="h4 fw-bold mb-0 d-flex align-items-center">
-                John Doe
+                @nome
                 <span class="ms-1 text-primary">
                     <svg viewBox="0 0 24 24" aria-label="Verified account" width="20" height="20" fill="currentColor">
                         <g>
@@ -55,7 +55,7 @@
                     </svg>
                 </span>
             </h1>
-            <p class="text-muted mb-2">johndoe</p>
+            <p class="text-muted mb-2 mt-1">@@@nome</p>
             <p class="mb-2">Web Developer & Designer | Creating digital experiences | Open for opportunities</p>
 
             <div class="d-flex flex-wrap mb-2">

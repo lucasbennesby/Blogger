@@ -4,6 +4,7 @@ using Blogger.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace Blogger.Controllers
 {
@@ -28,16 +29,17 @@ namespace Blogger.Controllers
             return View(lista);
         }
 
-        public async Task<IActionResult> PerfilDeUsuario(PerfilUsuarioViewModel perfilUsuarioViewModel)
+        public async Task<IActionResult> PerfilDeUsuario(int id)
         {
             var usuarioLogado = ViewBag.UsuarioLogado = HttpContext.User.Identity?.IsAuthenticated;
             if (!usuarioLogado)
             {
                 return RedirectToAction("Cadastrar", "Account");
             }
-            var lista = await _publicacaoRepository.ListarPorUsuario(perfilUsuarioViewModel.usuarioId);
-            ViewBag.UsuarioId = perfilUsuarioViewModel.usuarioId;
-            ViewBag.Usuario = _usuarioRepository.ObterUsuario(perfilUsuarioViewModel.usuarioId);
+            var lista = await _publicacaoRepository.ListarPorUsuario(id);
+            ViewBag.UsuarioId = id;
+            var usuario = await _usuarioRepository.ObterUsuario(id);
+            ViewBag.UserName = usuario.Nome;
             return View(lista);
         }
 

@@ -1,0 +1,39 @@
+﻿@model Blogger.Models.ViewModels.EditarPerfilViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+    var userId = ViewBag.UsuarioId;
+}
+
+<link rel="stylesheet" href="~/css/Cadastrar.css" />
+
+<div class="cardAlt" id="cardForm">
+    <div id="card-content">
+        <div id="card-title">
+            <h2>Editar Perfil</h2>
+            <div class="underline-title"></div>
+        </div>
+        <form asp-route-id="@userId" asp-action="EditarPerfil" asp-controller="Account" class="form">
+            <span asp-validation-for="@Model.Nome" class="text-danger" style="font-size:13px; text-align:center;"></span>
+           
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label asp-for="Nome" style="padding-top:13px">
+                &nbsp;Nome
+            </label>
+            <input value="@Model.Nome" asp-for="Nome" id="user-name" class="form-content" />
+            <input  id="submit-btn" value="Atualizar" type="submit" name="submit" />
+        </form>
+    </div>
+</div>
+
+<script src="~/js/mostrarSenha.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

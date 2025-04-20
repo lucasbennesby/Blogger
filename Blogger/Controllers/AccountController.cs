@@ -26,15 +26,15 @@ namespace Blogger.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar(CadastrarUsuarioViewModel usuarioVM)
         {
-            if(await _usuarioRepository.VerificarEmail(usuarioVM.Email))
+            if (await _usuarioRepository.VerificarEmail(usuarioVM.Email))
             {
                 ModelState.AddModelError("Email", "Este endereço de email ja está cadastrado no sistema");
 
                 return View(usuarioVM);
             }
-            
+
             var usuarioCriado = await _usuarioRepository.CadastrarUsuario(usuarioVM);
-            if(usuarioCriado != null)
+            if (usuarioCriado != null)
             {
                 return await Login(new LoginViewModel { Email = usuarioCriado.Email, Senha = usuarioCriado.Senha });
             }
@@ -49,9 +49,9 @@ namespace Blogger.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var logado = await _usuarioRepository.AutorizarUsuario(loginVM,HttpContext);
+                var logado = await _usuarioRepository.AutorizarUsuario(loginVM, HttpContext);
 
                 if (logado)
                 {
@@ -71,6 +71,23 @@ namespace Blogger.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Publicacao");
+        }
+
+        public async Task<IActionResult> Editar(int id)
+        {
+            var usuario = await _usuarioRepository.ObterUsuario(id);
+            EditarPerfilViewModel usuarioVM = new EditarPerfilViewModel()
+            {
+                Nome = usuario.Nome
+            };
+            ViewBag.UsuarioId = id;
+
+            return View(usuarioVM);
+        }
+        public async Task<IActionResult> EditarPerfil (EditarPerfilViewModel usuarioVM, int id)
+        {
+            await _usuarioRepository.EditarUsuario(usuarioVM, id);
+            return RedirectToAction("PerfilDeUsuario", "TimeLine", new { id = id });
         }
     }
 }

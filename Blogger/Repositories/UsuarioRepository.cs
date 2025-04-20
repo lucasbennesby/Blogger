@@ -1,8 +1,10 @@
 ﻿using Blogger.Contexto;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
+using Humanizer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -26,7 +28,7 @@ namespace Blogger.Repositories
                 {
                     new(ClaimTypes.Name, usuario.Nome),
                     new(ClaimTypes.Email, usuario.Email),
-                    new("UsuarioId", usuario.Id.ToString()),                   
+                    new("UsuarioId", usuario.Id.ToString()),
                 };
 
                 if (usuario.Perfil == "User")
@@ -35,7 +37,7 @@ namespace Blogger.Repositories
                     claims.Add(new Claim(ClaimTypes.Role, "UserPro"));
                 else
                     claims.Add(new Claim(ClaimTypes.Role, "ADM"));
-                
+
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
@@ -48,7 +50,7 @@ namespace Blogger.Repositories
         public async Task<Usuario> CadastrarUsuario(CadastrarUsuarioViewModel usuarioVM)
         {
             var usuario = new Usuario();
-            usuario.Nome = usuarioVM.Nome;         
+            usuario.Nome = usuarioVM.Nome;
             usuario.Email = usuarioVM.Email;
             usuario.Senha = usuarioVM.Senha;
             usuario.Perfil = usuarioVM.Perfil;
@@ -61,15 +63,28 @@ namespace Blogger.Repositories
         }
         public async Task<bool> VerificarEmail(string email)
         {
-            var emailJaExiste = await _usuarioContext.Usuario.AnyAsync(x => x.Email == email );
+            var emailJaExiste = await _usuarioContext.Usuario.AnyAsync(x => x.Email == email);
             return emailJaExiste;
         }
         public async Task<Usuario> ObterUsuario(int id)
         {
-            var usuario =  await _usuarioContext.Usuario.FirstOrDefaultAsync(x => x.Id == id);
+            var usuario = await _usuarioContext.Usuario.FirstOrDefaultAsync(x => x.Id == id);
 
             return usuario;
         }
 
+        public async Task<Usuario> EditarUsuario(EditarPerfilViewModel usuarioVM, int id)
+        {
+            var usuario = await ObterUsuario(id);
+
+            if (usuarioVM.Nome != null)
+            {
+                usuario.Nome = usuarioVM.Nome;
+            }
+
+            _usuarioContext.Update(usuario);
+            _usuarioContext.SaveChanges();
+            return usuario;
+        }
     }
 }

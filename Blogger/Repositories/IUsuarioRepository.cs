@@ -10,6 +10,7 @@ namespace Blogger.Repositories
         Task<bool> AutorizarUsuario(LoginViewModel usuarioVM, HttpContext context);
         Task<bool> VerificarEmail(string email);
         Task<Usuario> ObterUsuario(int id);
+        Task<Usuario> EditarUsuario(EditarPerfilViewModel usuarioVM,int id);
     }
 }
     
