@@ -53,7 +53,7 @@ namespace Blogger.Repositories
             usuario.Nome = usuarioVM.Nome;
             usuario.Email = usuarioVM.Email;
             usuario.Senha = usuarioVM.Senha;
-            usuario.Perfil = usuarioVM.Perfil;
+            usuario.Perfil = "UserPro";
             usuario.ImagemDePerfil = "provisorio";
 
             _usuarioContext.Add(usuario);

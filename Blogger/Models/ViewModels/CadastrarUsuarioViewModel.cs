@@ -20,7 +20,7 @@ namespace Blogger.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Senha",ErrorMessage ="As senhas não são iguais")]
         public string ConfirmarSenha { get; set; }
-        [Required(ErrorMessage = "É necessário selecionar um tipo de perfil")]
         public string Perfil {  get; set; }
+        public string FotoDePerfil { get; set; }
     }
 }
